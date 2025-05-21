@@ -51,3 +51,18 @@ body.dark-mode .btn {
     background-color: #5c5c8a;
     border-color: #5c5c8a;
 }
+#theme-toggle-wrapper {
+    z-index: 1050;
+    background-color: rgba(255, 255, 255, 0.8); /* slightly transparent for light mode */
+    border-bottom-left-radius: 10px;
+}
+
+body.dark-mode #theme-toggle-wrapper {
+    background-color: rgba(18, 18, 18, 0.9); /* for dark mode */
+}
+
+@media (max-width: 576px) {
+    #theme-toggle-wrapper {
+        padding: 6px 10px;
+    }
+}
