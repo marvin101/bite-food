@@ -108,24 +108,22 @@ function detailsView(id) {
             });
         });
 }
-// Theme Toggle using switch
 const themeSwitch = document.getElementById("themeToggleSwitch");
+if (themeSwitch) {
+    window.addEventListener("DOMContentLoaded", () => {
+        if (localStorage.getItem("theme") === "dark") {
+            document.body.classList.add("dark-mode");
+            themeSwitch.checked = true;
+        }
+    });
 
-// Apply theme on load
-window.addEventListener("DOMContentLoaded", () => {
-    if (localStorage.getItem("theme") === "dark") {
-        document.body.classList.add("dark-mode");
-        themeSwitch.checked = true;
-    }
-});
-
-// Toggle theme
-themeSwitch.addEventListener("change", () => {
-    if (themeSwitch.checked) {
-        document.body.classList.add("dark-mode");
-        localStorage.setItem("theme", "dark");
-    } else {
-        document.body.classList.remove("dark-mode");
-        localStorage.setItem("theme", "light");
-    }
-});
+    themeSwitch.addEventListener("change", () => {
+        if (themeSwitch.checked) {
+            document.body.classList.add("dark-mode");
+            localStorage.setItem("theme", "dark");
+        } else {
+            document.body.classList.remove("dark-mode");
+            localStorage.setItem("theme", "light");
+        }
+    });
+}
