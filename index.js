@@ -108,19 +108,24 @@ function detailsView(id) {
             });
         });
 }
-// Theme Toggle
-const themeToggleBtn = document.getElementById("themeToggle");
+// Theme Toggle using switch
+const themeSwitch = document.getElementById("themeToggleSwitch");
 
-themeToggleBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-
-    // Optional: store preference
-    localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
-});
-
-// On load, apply stored theme
+// Apply theme on load
 window.addEventListener("DOMContentLoaded", () => {
     if (localStorage.getItem("theme") === "dark") {
         document.body.classList.add("dark-mode");
+        themeSwitch.checked = true;
+    }
+});
+
+// Toggle theme
+themeSwitch.addEventListener("change", () => {
+    if (themeSwitch.checked) {
+        document.body.classList.add("dark-mode");
+        localStorage.setItem("theme", "dark");
+    } else {
+        document.body.classList.remove("dark-mode");
+        localStorage.setItem("theme", "light");
     }
 });
