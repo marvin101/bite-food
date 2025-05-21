@@ -29,29 +29,25 @@
     justify-content: center;
     margin-bottom: 10px;
 }
-/* Dark Mode Styles */
 body.dark-mode {
     background-color: #121212;
-    color: #f0f0f0;
+    color: #f1f1f1;
 }
 
 body.dark-mode .container {
-    background-color: #1f1f1f;
+    background-color: #1e1e1e;
+}
+
+body.dark-mode .headName {
+    color: #f8c471;
 }
 
 body.dark-mode .card {
     background-color: #2c2c2c;
-    color: #f0f0f0;
+    color: white;
 }
 
 body.dark-mode .btn {
-    background-color: #333;
-    color: #fff;
-    border-color: #555;
-}
-
-body.dark-mode input {
-    background-color: #333;
-    color: #fff;
-    border: 1px solid #555;
+    background-color: #5c5c8a;
+    border-color: #5c5c8a;
 }
