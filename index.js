@@ -108,3 +108,19 @@ function detailsView(id) {
             });
         });
 }
+// Theme Toggle
+const themeToggleBtn = document.getElementById("themeToggle");
+
+themeToggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+
+    // Optional: store preference
+    localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+});
+
+// On load, apply stored theme
+window.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+    }
+});
