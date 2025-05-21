@@ -107,7 +107,6 @@ function detailsView(id) {
                 }
             });
         });
-}
 // Theme Toggle using switch
 const themeSwitch = document.getElementById("themeToggleSwitch");
 
@@ -129,3 +128,4 @@ themeSwitch.addEventListener("change", () => {
         localStorage.setItem("theme", "light");
     }
 });
+}
