@@ -6,32 +6,32 @@ document.getElementById("button").addEventListener('click',()=>{
 
     fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${inputValue}`)
         .then(response => response.json())
-        .then(data=> {
-            const items = document.getElementById("items")
-            items.innerHTML = ""
-            if(data.meals == null){
-                document.getElementById("msg").style.display = "block"
-            }else{
-                document.getElementById("msg").style.display = "none"
-                data.meals.forEach(meal =>{
-                   let itemDiv = document.createElement("div")
-                    itemDiv.className = "m-2 singleItem"
-                    itemDiv.setAttribute('onclick' , `detailsView('${meal.idMeal}')`)
-                    let  itemInfo = `
-                    <div class="card " style="width: 12rem;">
-                        <img src="${meal.strMealThumb}" class="card-img-top" alt="...">
-                        <div class="card-body text-center">
-                            <h5 class="card-text">${meal.strMeal}</h5>
+        .then(data => {
+            const items = document.getElementById("items");
+            items.innerHTML = "";
+            if (data.meals == null) {
+                document.getElementById("msg").style.display = "block";
+            } else {
+                document.getElementById("msg").style.display = "none";
+                // Start Bootstrap row
+                let grid = `<div class="row justify-content-center">`;
+                data.meals.forEach(meal => {
+                    grid += `
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                            <div class="card singleItem h-100" style="cursor:pointer;" onclick="detailsView('${meal.idMeal}')">
+                                <img src="${meal.strMealThumb}" class="card-img-top" alt="${meal.strMeal}">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">${meal.strMeal}</h5>
+                                    <p class="card-text">${meal.strArea} | ${meal.strCategory}</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    `
-                    itemDiv.innerHTML = itemInfo
-                    items.appendChild(itemDiv)
+                    `;
                 });
+                grid += `</div>`;
+                items.innerHTML = grid;
             }
-
-        })
-      
+        });
 });
 
 function detailsView(id) {
@@ -126,3 +126,16 @@ if (themeSwitch) {
         }
     });
 }
+
+// Back to Top button logic
+const backToTopBtn = document.getElementById("backToTopBtn");
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 200) {
+        backToTopBtn.style.display = "block";
+    } else {
+        backToTopBtn.style.display = "none";
+    }
+});
+backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
