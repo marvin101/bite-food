@@ -1,72 +1,166 @@
-.container{
-    background-color: rgb(236, 177, 67);
+/* Gradient background for the main container */
+.container {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 40%, #f9ea44 80%, #38a1db 100%);
     padding-bottom: 20px;
     min-height: 100vh;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
 }
 
-.headName{
-    color: rgb(34, 34, 97);
+/* Head name styling */
+.headName {
+    color: #1b4d3e;
     text-align: center;
     padding-top: 20px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 8px rgba(56, 169, 219, 0.15);
 }
 
-#msg{
+/* Message styling */
+#msg {
     text-align: center;
-    color: red;
+    color: #e74c3c;
     display: none;
     margin-bottom: 20px;
+    font-weight: bold;
+    background: rgba(255,255,255,0.7);
+    border-radius: 8px;
+    padding: 10px 0;
 }
-#items{
+
+/* Items grid */
+#items {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
 }
-.singleItem{
+
+/* Card styling */
+.singleItem, .card {
     cursor: pointer;
+    border-radius: 18px !important;
+    box-shadow: 0 4px 24px 0 rgba(56, 169, 219, 0.10);
+    border: none;
+    background: rgba(255,255,255,0.85);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
-#details{
+.singleItem:hover, .card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 8px 32px 0 rgba(67, 233, 123, 0.18);
+}
+
+/* Card title and text */
+.card-title {
+    color: #1b4d3e;
+    font-weight: bold;
+}
+.card-text {
+    color: #38a1db;
+}
+
+/* Details section */
+#details {
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
 }
-body.dark-mode {
-    background-color: #121212;
-    color: #f1f1f1;
+
+/* Buttons */
+.btn-primary, .btn-info {
+    background: linear-gradient(90deg, #43e97b 0%, #38a1db 100%);
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 0 2px 8px 0 rgba(56, 169, 219, 0.10);
+    transition: background 0.2s;
+}
+.btn-primary:hover, .btn-info:hover {
+    background: linear-gradient(90deg, #38a1db 0%, #43e97b 100%);
+    color: #fff;
 }
 
-body.dark-mode .container {
-    background-color: #1e1e1e;
+.btn-secondary {
+    background: #f9ea44;
+    color: #1b4d3e;
+    border: none;
+    font-weight: bold;
+}
+.btn-secondary:hover {
+    background: #ffe066;
+    color: #1b4d3e;
 }
 
-body.dark-mode .headName {
-    color: #f8c471;
-}
-
-body.dark-mode .card {
-    background-color: #2c2c2c;
-    color: white;
-}
-
-body.dark-mode .btn {
-    background-color: #5c5c8a;
-    border-color: #5c5c8a;
-}
+/* Theme toggle wrapper */
 #theme-toggle-wrapper {
     z-index: 1050;
-    background-color: rgba(255, 255, 255, 0.8); /* slightly transparent for light mode */
+    background: rgba(255, 255, 255, 0.8);
     border-bottom-left-radius: 10px;
 }
 
 body.dark-mode #theme-toggle-wrapper {
-    background-color: rgba(18, 18, 18, 0.9); /* for dark mode */
+    background: rgba(18, 18, 18, 0.9);
 }
 
+/* Back to Top Button */
 #backToTopBtn {
     transition: opacity 0.3s;
+    background: linear-gradient(90deg, #43e97b 0%, #38a1db 100%);
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 0 2px 8px 0 rgba(56, 169, 219, 0.10);
+}
+#backToTopBtn:hover {
+    background: linear-gradient(90deg, #38a1db 0%, #43e97b 100%);
+    color: #fff;
 }
 
+/* Dark mode overrides */
+body.dark-mode {
+    background: #1b2836;
+    color: #f1f1f1;
+}
+body.dark-mode .container {
+    background: linear-gradient(135deg, #1b4d3e 0%, #38a1db 60%, #f9ea44 100%);
+}
+body.dark-mode .headName {
+    color: #f9ea44;
+    text-shadow: 0 2px 8px rgba(56, 169, 219, 0.25);
+}
+body.dark-mode .card, body.dark-mode .singleItem {
+    background: rgba(34, 49, 63, 0.95);
+    color: #fff;
+}
+body.dark-mode .card-title {
+    color: #43e97b;
+}
+body.dark-mode .card-text {
+    color: #f9ea44;
+}
+body.dark-mode .btn-primary, body.dark-mode .btn-info, body.dark-mode #backToTopBtn {
+    background: linear-gradient(90deg, #38a1db 0%, #43e97b 100%);
+    color: #fff;
+}
+body.dark-mode .btn-primary:hover, body.dark-mode .btn-info:hover, body.dark-mode #backToTopBtn:hover {
+    background: linear-gradient(90deg, #43e97b 0%, #38a1db 100%);
+    color: #fff;
+}
+body.dark-mode .btn-secondary {
+    background: #f9ea44;
+    color: #1b4d3e;
+}
+body.dark-mode .btn-secondary:hover {
+    background: #ffe066;
+    color: #1b4d3e;
+}
+
+/* Responsive tweaks */
 @media (max-width: 576px) {
     #theme-toggle-wrapper {
         padding: 6px 10px;
+    }
+    .container {
+        border-radius: 0;
     }
 }
