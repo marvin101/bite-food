@@ -2,12 +2,10 @@ document.getElementById("button").addEventListener('click',()=>{
     let inputValue = document.getElementById('inputName').value 
     let details = document.getElementById("details")
     details.innerHTML = "";
-    buttonSpinner.style.display="inline-block"; // Show spinner
 
     fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${inputValue}`)
         .then(response => response.json())
         .then(data=> {
-            buttonSpinner.style.display = "none"; // Hide spinner
             const items = document.getElementById("items")
             items.innerHTML = ""
             if(data.meals == null){
