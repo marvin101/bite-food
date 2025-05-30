@@ -1,4 +1,5 @@
 document.getElementById("button").addEventListener('click',()=>{
+    document.getElementById("msg").style.display = "none"; // <-- Add this line
     let inputValue = document.getElementById('inputName').value 
     let details = document.getElementById("details")
     details.innerHTML = "";
