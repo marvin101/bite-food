@@ -139,3 +139,67 @@ window.addEventListener("scroll", () => {
 backToTopBtn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
+
+// Fetch and display meal categories
+function loadCategories() {
+    fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
+        .then(res => res.json())
+        .then(data => {
+            const categoriesDiv = document.getElementById("categories");
+            let html = `<div class="d-flex flex-wrap justify-content-center gap-2">`;
+            data.categories.forEach(cat => {
+                html += `
+                    <button class="btn btn-secondary category-btn" data-category="${cat.strCategory}">
+                        <img src="${cat.strCategoryThumb}" alt="${cat.strCategory}" style="width:32px;height:32px;border-radius:50%;margin-right:8px;">
+                        ${cat.strCategory}
+                    </button>
+                `;
+            });
+            html += `</div>`;
+            categoriesDiv.innerHTML = html;
+
+            // Add click event to each category button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    searchByCategory(this.getAttribute('data-category'));
+                });
+            });
+        });
+}
+
+// Search meals by category
+function searchByCategory(category) {
+    document.getElementById("msg").style.display = "none";
+    document.getElementById("inputName").value = ""; // Clear search box
+    let details = document.getElementById("details");
+    details.innerHTML = "";
+    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(category)}`)
+        .then(response => response.json())
+        .then(data => {
+            const items = document.getElementById("items");
+            items.innerHTML = "";
+            if (data.meals == null) {
+                document.getElementById("msg").style.display = "block";
+            } else {
+                document.getElementById("msg").style.display = "none";
+                let grid = `<div class="row justify-content-center">`;
+                data.meals.forEach(meal => {
+                    grid += `
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                            <div class="card singleItem h-100" style="cursor:pointer;" onclick="detailsView('${meal.idMeal}')">
+                                <img src="${meal.strMealThumb}" class="card-img-top" alt="${meal.strMeal}">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">${meal.strMeal}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                grid += `</div>`;
+                items.innerHTML = grid;
+            }
+        });
+}
+
+// Call this when the page loads
+window.addEventListener("DOMContentLoaded", loadCategories);
