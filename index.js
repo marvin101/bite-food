@@ -140,27 +140,36 @@ backToTopBtn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-// Fetch and display meal categories
+// Fetch and display meal categories as a dropdown
 function loadCategories() {
     fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
         .then(res => res.json())
         .then(data => {
             const categoriesDiv = document.getElementById("categories");
-            let html = `<div class="d-flex flex-wrap justify-content-center gap-2">`;
+            let html = `
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="categoriesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Browse by Category
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="categoriesDropdown" style="max-height:300px;overflow-y:auto;">
+            `;
             data.categories.forEach(cat => {
                 html += `
-                    <button class="btn btn-secondary category-btn" data-category="${cat.strCategory}">
-                        <img src="${cat.strCategoryThumb}" alt="${cat.strCategory}" style="width:32px;height:32px;border-radius:50%;margin-right:8px;">
-                        ${cat.strCategory}
-                    </button>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center category-dropdown-item" href="#" data-category="${cat.strCategory}">
+                            <img src="${cat.strCategoryThumb}" alt="${cat.strCategory}" style="width:28px;height:28px;border-radius:50%;margin-right:10px;">
+                            <span>${cat.strCategory}</span>
+                        </a>
+                    </li>
                 `;
             });
-            html += `</div>`;
+            html += `</ul></div>`;
             categoriesDiv.innerHTML = html;
 
-            // Add click event to each category button
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
+            // Add click event to each dropdown item
+            document.querySelectorAll('.category-dropdown-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
                     searchByCategory(this.getAttribute('data-category'));
                 });
             });
