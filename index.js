@@ -18,12 +18,13 @@ document.getElementById("button").addEventListener('click',()=>{
                 data.meals.forEach(meal => {
                     grid += `
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                            <div class="card singleItem h-100" style="cursor:pointer;" onclick="detailsView('${meal.idMeal}')">
+                            <div class="card singleItem h-100" style="cursor:pointer;" onclick="detailsView('${meal.idMeal}', this)">
                                 <img src="${meal.strMealThumb}" class="card-img-top" alt="${meal.strMeal}">
                                 <div class="card-body text-center">
                                     <h5 class="card-title">${meal.strMeal}</h5>
-                                    <p class="card-text">${meal.strArea} | ${meal.strCategory}</p>
+                                    <p class="card-text">${meal.strArea ? meal.strArea : ""} ${meal.strCategory ? "| " + meal.strCategory : ""}</p>
                                 </div>
+                                <div class="details-container" id="details-${meal.idMeal}" style="display:none;"></div>
                             </div>
                         </div>
                     `;
@@ -34,68 +35,65 @@ document.getElementById("button").addEventListener('click',()=>{
         });
 });
 
-function detailsView(id) {
-    let details = document.getElementById("details");
-    let items = document.getElementById("items");
-    details.innerHTML = "";
+function detailsView(id, cardElem) {
+    // Collapse any open details
+    document.querySelectorAll('.details-container').forEach(div => {
+        div.style.display = "none";
+        div.innerHTML = "";
+    });
 
+    // Find the details container in the clicked card
+    const detailsDiv = cardElem.querySelector(`#details-${id}`);
+    if (!detailsDiv) return;
+
+    // If already open, close it
+    if (detailsDiv.style.display === "block") {
+        detailsDiv.style.display = "none";
+        detailsDiv.innerHTML = "";
+        return;
+    }
+
+    // Fetch and show details
     fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
         .then(res => res.json())
         .then(detail => {
             let meal = detail.meals[0];
-            //Youtube link
-    let youtubeEmbed = "";
-    if (meal.strYoutube) {
-    // Extract the video ID from the URL
-    const videoId = meal.strYoutube.split("v=")[1];
-    youtubeEmbed = `
-        <h6>Watch Recipe Video</h6>
-        <div class="ratio ratio-16x9 mb-2">
-            <iframe src="https://www.youtube.com/embed/${videoId}" 
-                title="YouTube video" allowfullscreen></iframe>
-        </div>
-        `;
-        }
-    //youtube link ends
-            let detailsDiv = document.createElement("div");
-            detailsDiv.innerHTML = `
-                <button class="btn btn-secondary mb-2" id="backBtn">Back</button>
-                <div class="card" style="width: 19rem;">
-                    <img src="${meal.strMealThumb}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h3 class="card-text">${meal.strMeal}</h3>
-                        <h6>Ingredients</h6>
-                        <ul>
-                            <li>${meal.strArea}</li>
-                            <li>${meal.strCategory}</li>
-                            <li>${meal.strIngredient1}</li>
-                            <li>${meal.strIngredient2}</li>
-                            <li>${meal.strIngredient3}</li>
-                            <li>${meal.strIngredient4}</li>
-                            <li>${meal.strIngredient5}</li>
-                        </ul>
-                        <button class="btn btn-info mb-2" id="showInstructionsBtn">Show Instructions</button>
-                        <div id="instructions" style="display:none;">
-                            <h6>Instructions</h6>
-                            <p>${meal.strInstructions}</p>
-                        </div>
-                        ${youtubeEmbed}
+            let youtubeEmbed = "";
+            if (meal.strYoutube) {
+                const videoId = meal.strYoutube.split("v=")[1];
+                youtubeEmbed = `
+                    <h6>Watch Recipe Video</h6>
+                    <div class="ratio ratio-16x9 mb-2">
+                        <iframe src="https://www.youtube.com/embed/${videoId}" 
+                            title="YouTube video" allowfullscreen></iframe>
                     </div>
+                `;
+            }
+            detailsDiv.innerHTML = `
+                <div class="card-body">
+                    <h6>Ingredients</h6>
+                    <ul>
+                        <li>${meal.strArea}</li>
+                        <li>${meal.strCategory}</li>
+                        <li>${meal.strIngredient1}</li>
+                        <li>${meal.strIngredient2}</li>
+                        <li>${meal.strIngredient3}</li>
+                        <li>${meal.strIngredient4}</li>
+                        <li>${meal.strIngredient5}</li>
+                    </ul>
+                    <button class="btn btn-info mb-2" id="showInstructionsBtn-${id}">Show Instructions</button>
+                    <div id="instructions-${id}" style="display:none;">
+                        <h6>Instructions</h6>
+                        <p>${meal.strInstructions}</p>
+                    </div>
+                    ${youtubeEmbed}
                 </div>
             `;
-            details.appendChild(detailsDiv);
-            items.innerHTML = "";
+            detailsDiv.style.display = "block";
 
-            // Back button
-            const backBtn = detailsDiv.querySelector("#backBtn");
-            backBtn.addEventListener("click", () => {
-                details.innerHTML = "";
-                items.innerHTML = "";
-            });
-
-            // Show/hide instructions        
-            const showBtn = detailsDiv.querySelector("#showInstructionsBtn");
-            const instructionsDiv = detailsDiv.querySelector("#instructions");
+            // Show/hide instructions
+            const showBtn = detailsDiv.querySelector(`#showInstructionsBtn-${id}`);
+            const instructionsDiv = detailsDiv.querySelector(`#instructions-${id}`);
             showBtn.addEventListener("click", () => {
                 if (instructionsDiv.style.display === "none") {
                     instructionsDiv.style.display = "block";
@@ -107,6 +105,7 @@ function detailsView(id) {
             });
         });
 }
+
 const themeSwitch = document.getElementById("themeToggleSwitch");
 if (themeSwitch) {
     window.addEventListener("DOMContentLoaded", () => {
@@ -195,11 +194,12 @@ function searchByCategory(category) {
                 data.meals.forEach(meal => {
                     grid += `
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                            <div class="card singleItem h-100" style="cursor:pointer;" onclick="detailsView('${meal.idMeal}')">
+                            <div class="card singleItem h-100" style="cursor:pointer;" onclick="detailsView('${meal.idMeal}', this)">
                                 <img src="${meal.strMealThumb}" class="card-img-top" alt="${meal.strMeal}">
                                 <div class="card-body text-center">
                                     <h5 class="card-title">${meal.strMeal}</h5>
                                 </div>
+                                <div class="details-container" id="details-${meal.idMeal}" style="display:none;"></div>
                             </div>
                         </div>
                     `;
