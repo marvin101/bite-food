@@ -224,7 +224,7 @@ const suggestions = document.getElementById('suggestions');
 
 inputName.addEventListener('input', function() {
     const query = this.value.trim();
-    if (query.length < 2) {
+    if (query.length < 3) {
         suggestions.style.display = 'none';
         suggestions.innerHTML = '';
         return;
@@ -249,6 +249,10 @@ inputName.addEventListener('input', function() {
             } else {
                 suggestions.style.display = 'none';
             }
+        })
+        .catch(err => {
+            console.error("Suggestion fetch error:", err);
+            suggestions.style.display = 'none';
         });
 });
 
