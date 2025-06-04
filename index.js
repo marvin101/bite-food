@@ -217,3 +217,43 @@ function searchByCategory(category) {
 
 // Call this when the page loads
 window.addEventListener("DOMContentLoaded", loadCategories);
+
+// Autocomplete suggestions for inputName
+const inputName = document.getElementById('inputName');
+const suggestions = document.getElementById('suggestions');
+
+inputName.addEventListener('input', function() {
+    const query = this.value.trim();
+    if (query.length < 2) {
+        suggestions.style.display = 'none';
+        suggestions.innerHTML = '';
+        return;
+    }
+    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`)
+        .then(res => res.json())
+        .then(data => {
+            suggestions.innerHTML = '';
+            if (data.meals) {
+                data.meals.slice(0, 8).forEach(meal => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item list-group-item-action';
+                    li.textContent = meal.strMeal;
+                    li.addEventListener('mousedown', function(e) {
+                        e.preventDefault();
+                        inputName.value = meal.strMeal;
+                        suggestions.style.display = 'none';
+                    });
+                    suggestions.appendChild(li);
+                });
+                suggestions.style.display = 'block';
+            } else {
+                suggestions.style.display = 'none';
+            }
+        });
+});
+
+document.addEventListener('click', function(e) {
+    if (!inputName.contains(e.target) && !suggestions.contains(e.target)) {
+        suggestions.style.display = 'none';
+    }
+});

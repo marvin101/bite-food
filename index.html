@@ -31,11 +31,11 @@
         <div id="categories" class="mb-4 d-flex justify-content-center"></div>
 
         <form action="" class="col-md-6 m-auto py-5">
-            <div class="input-group mb-3">
+            <div class="input-group mb-3" style="position:relative;">
                 <input type="text" id="inputName" class="form-control" placeholder="Search for a meal...."
-                    aria-label="Recipient's username" aria-describedby="button-addon2">
+                    aria-label="Recipient's username" aria-describedby="button-addon2" autocomplete="off">
                 <button class="btn btn-primary" type="button" id="button">Search</button>
-                </button>
+                <ul id="suggestions" class="list-group position-absolute w-100" style="z-index: 1000; display: none; top:100%; left:0;"></ul>
             </div>
         </form>
         <div id="msg" class="hidden">
