@@ -69,17 +69,22 @@ function detailsView(id, cardElem) {
                     </div>
                 `;
             }
+
+            // Collect all non-empty ingredients
+            let ingredients = [];
+            for (let i = 1; i <= 20; i++) {
+                const ingredient = meal[`strIngredient${i}`];
+                const measure = meal[`strMeasure${i}`];
+                if (ingredient && ingredient.trim()) {
+                    ingredients.push(`<li>${ingredient}${measure && measure.trim() ? ` - ${measure}` : ""}</li>`);
+                }
+            }
+
             detailsDiv.innerHTML = `
                 <div class="card-body">
                     <h6>Ingredients</h6>
                     <ul>
-                        <li>${meal.strArea}</li>
-                        <li>${meal.strCategory}</li>
-                        <li>${meal.strIngredient1}</li>
-                        <li>${meal.strIngredient2}</li>
-                        <li>${meal.strIngredient3}</li>
-                        <li>${meal.strIngredient4}</li>
-                        <li>${meal.strIngredient5}</li>
+                        ${ingredients.join("")}
                     </ul>
                     <button class="btn btn-info mb-2" id="showInstructionsBtn-${id}">Show Instructions</button>
                     <div id="instructions-${id}" style="display:none;">
