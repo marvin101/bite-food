@@ -6,7 +6,6 @@
     border-radius: 18px;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
 }
-
 /* Head name styling */
 .headName {
     color: #1b4d3e;
@@ -66,6 +65,42 @@
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
+}
+/* Stylish search box */
+.input-group .form-control {
+  border-radius: 30px 0 0 30px !important;
+  box-shadow: 0 2px 8px rgba(56, 169, 219, 0.10);
+  border: 2px solid #38a1db;
+  background: rgba(255,255,255,0.95);
+  font-size: 1.1rem;
+  padding: 12px 20px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-group .form-control:focus {
+  border-color: #43e97b;
+  box-shadow: 0 4px 16px rgba(67, 233, 123, 0.15);
+  background: #f9f9f9;
+}
+
+.input-group .btn-primary {
+  border-radius: 0 30px 30px 0 !important;
+  padding: 0 22px;
+  font-size: 1.3rem;
+  background: linear-gradient(90deg, #43e97b 0%, #38a1db 100%);
+  border: none;
+  transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-group .btn-primary:hover {
+  background: linear-gradient(90deg, #38a1db 0%, #43e97b 100%);
+}
+
+.input-group .bi-search {
+  font-size: 1.4rem;
 }
 
 /* Buttons */
@@ -196,4 +231,208 @@ body.dark-mode .btn-secondary:hover {
     .container {
         border-radius: 0;
     }
+}
+.custom-navbar {
+    background-color: #5b9183 !important; /* Example: orange */
+}
+/* Play button overlay for video image */
+.pulsating-play-btn {
+  display: inline-block;
+  position: relative;
+}
+
+
+.pulsating-play-btn img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.pulsating-play-btn .play-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: #fff;
+  background: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  cursor: pointer;
+  
+}
+
+.pulsating-play-btn .play-overlay:hover {
+  background: rgba(0,0,0,0.7);
+}
+/* Hide play overlay by default */
+.pulsating-play-btn .play-overlay {
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+/* Show play overlay on hover */
+.pulsating-play-btn:hover .play-overlay,
+.pulsating-play-btn:focus .play-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/*--------------------------------------------------------------
+# Contact Section
+--------------------------------------------------------------*/
+.section-title {
+  text-align: center;
+  padding: 30px 0;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-bottom: 0;
+  position: relative;
+  z-index: 2;
+}
+.section-title p {
+  margin-bottom: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.contact .info-wrap {
+  background-color: var(--surface-color);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+@media (max-width: 575px) {
+  .contact .info-wrap {
+    padding: 20px;
+  }
+}
+
+.contact .info-item {
+  margin-bottom: 40px;
+}
+
+.contact .info-item i {
+  font-size: 20px;
+  color: var(--accent-color);
+  background: color-mix(in srgb, var(--accent-color), transparent 92%);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  transition: all 0.3s ease-in-out;
+  margin-right: 15px;
+}
+
+.contact .info-item h3 {
+  padding: 0;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.contact .info-item p {
+  padding: 0;
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+.contact .info-item:hover i {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+.contact .php-email-form {
+  background-color: var(--surface-color);
+  height: 100%;
+  padding: 30px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 575px) {
+  .contact .php-email-form {
+    padding: 20px;
+  }
+}
+
+.contact .php-email-form input[type=text],
+.contact .php-email-form input[type=email],
+.contact .php-email-form textarea {
+  font-size: 14px;
+  padding: 10px 15px;
+  box-shadow: none;
+  border-radius: 0;
+  color: var(--default-color);
+  background-color: var(--surface-color);
+  border-color: color-mix(in srgb, var(--default-color), transparent 80%);
+}
+
+.contact .php-email-form input[type=text]:focus,
+.contact .php-email-form input[type=email]:focus,
+.contact .php-email-form textarea:focus {
+  border-color: var(--accent-color);
+}
+
+.contact .php-email-form input[type=text]::placeholder,
+.contact .php-email-form input[type=email]::placeholder,
+.contact .php-email-form textarea::placeholder {
+  color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+/* Stylish Send Message button in contact form */
+.contact .php-email-form button[type=submit] {
+  color: #fff;
+  background: linear-gradient(90deg, #43e97b 0%, #38a1db 100%);
+  border: none;
+  padding: 8px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 24px;
+  box-shadow: 0 2px 8px rgba(56, 169, 219, 0.10);
+  transition: background 0.3s, transform 0.2s;
+  letter-spacing: 1px;
+   width: auto;            /* Ensure it only fits content */
+  min-width: 100px;       /* Optional: set a minimum width */
+  max-width: 160px;   
+  display: block;
+  margin: 18px auto 0 auto;
+}
+
+.contact .php-email-form button[type=submit]:hover {
+  background: linear-gradient(90deg, #38a1db 0%, #43e97b 100%);
+  transform: translateY(-2px) scale(1.04);
+  color: #fff;
+}
+/* Add spacing between nav items */
+.navbar-nav > .nav-item {
+  margin-right: 1.5rem;
+}
+.navbar-nav > .nav-item:last-child {
+  margin-right: 0;
+}
+
+/* Pop-up effect for More section buttons */
+#more .btn {
+  box-shadow: 0 4px 16px rgba(56, 169, 219, 0.18), 0 1.5px 4px rgba(67, 233, 123, 0.10);
+  transition: transform 0.18s, box-shadow 0.18s, background 0.3s;
+  will-change: transform;
+}
+
+#more .btn:hover,
+#more .btn:focus {
+  transform: scale(1.07) translateY(-3px);
+  box-shadow: 0 8px 24px rgba(56, 169, 219, 0.28), 0 3px 8px rgba(67, 233, 123, 0.15);
+  outline: none;
 }
