@@ -285,3 +285,29 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+// Example categories for Dashboard
+const dashboardCategories = [
+  { name: "Profile", link: "#profile" },
+  { name: "My Recipes", link: "#my-recipes" },
+  { name: "Favorites", link: "#favorites" },
+ // { name: "Settings", link: "#settings" }
+];
+
+function injectDashboardCategories() {
+  const dashboardMenu = document.getElementById('dashboardDropdownMenu');
+  if (!dashboardMenu) return;
+  dashboardMenu.innerHTML = '';
+  dashboardCategories.forEach(cat => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.className = 'dropdown-item';
+    a.href = cat.link;
+    a.textContent = cat.name;
+    li.appendChild(a);
+    dashboardMenu.appendChild(li);
+  });
+}
+
+// Run after DOM is loaded
+document.addEventListener('DOMContentLoaded', injectDashboardCategories);
