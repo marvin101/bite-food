@@ -149,14 +149,14 @@ function loadCategories() {
     fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
         .then(res => res.json())
         .then(data => {
-            const categoriesDiv = document.getElementById("categories");
-            let html = `
+        const dropdownMenu = document.getElementById("categoryDropdownMenu");
+            let html =/* `
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="categoriesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         Browse by Category
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="categoriesDropdown" style="max-height:300px;overflow-y:auto;">
-            `;
+            `;*/"";
             data.categories.forEach(cat => {
                 html += `
                     <li>
@@ -167,8 +167,8 @@ function loadCategories() {
                     </li>
                 `;
             });
-            html += `</ul></div>`;
-            categoriesDiv.innerHTML = html;
+           // html += `</ul></div>`;
+            dropdownMenu.innerHTML = html;
 
             // Add click event to each dropdown item
             document.querySelectorAll('.category-dropdown-item').forEach(item => {
@@ -260,4 +260,28 @@ document.addEventListener('click', function(e) {
     if (!inputName.contains(e.target) && !suggestions.contains(e.target)) {
         suggestions.style.display = 'none';
     }
+});
+// ...existing code...
+
+// Contact form submit handler
+document.addEventListener('DOMContentLoaded', function() {
+  const contactForm = document.querySelector('.php-email-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name-field').value.trim();
+      const email = document.getElementById('email-field').value.trim();
+      const subject = document.getElementById('subject-field').value.trim();
+      const message = document.getElementById('message-field').value.trim();
+
+      if (!name || !email || !subject || !message) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      alert('Your message has been sent. Thank you!');
+      contactForm.reset();
+    });
+  }
 });
