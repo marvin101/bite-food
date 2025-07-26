@@ -10,6 +10,8 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="index.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
@@ -22,19 +24,64 @@
             </div>
         </div>
     </div>
+    <!-- Navigation Bar -->
     <div class="container">
         <div class="headName">      
-            <img src="logo.png" alt="Tasty Bite logo" height="30%" width="20%">
+           <a class="navbar-brand" href="#">
+             <img src="logo.png" alt="Tasty Bite logo" height="30%" width="20%">
+             
+           </a>
+           
+    <nav class="navbar navbar-expand-lg custom-navbar">
+
+             <!--nav bar-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+            </li>
+
+           <!--Browse by category-->
+            <li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="navbarCategoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Browse by Category
+  </a>
+  <ul class="dropdown-menu" id="categoryDropdownMenu" aria-labelledby="navbarCategoryDropdown" style="max-height:300px;overflow-y:auto;">
+    <!-- Categories will be injected here by JS -->
+  </ul>
+</li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact Us</a>
+            </li>
+             <li class="nav-item">
+              <a class="nav-link" href="#more">More Recipes</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+        <!-- end nav Bar -->
         </div> 
 
         <!-- Categories Dropdown -->
-        <div id="categories" class="mb-4 d-flex justify-content-center"></div>
-
         <form action="" class="col-md-6 m-auto py-5">
+          <div style="position: relative; font-size: larger;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;color: rgb(45, 35, 55);text-shadow: blueviolet;font-style: oblique;">
+                <h3> Find the Perfect Recipes...</h3>
+              </div>
             <div class="input-group mb-3" style="position:relative;">
+              
                 <input type="text" id="inputName" class="form-control" placeholder="Search for a meal...."
                     aria-label="Recipient's username" aria-describedby="button-addon2" autocomplete="off">
-                <button class="btn btn-primary" type="button" id="button">Search</button>
+                <button class="btn btn-primary" type="button" id="button"> 
+                   <i class="bi bi-search"></i>
+                </button>
                 <ul id="suggestions" class="list-group position-absolute w-100" style="z-index: 1000; display: none; top:100%; left:0;"></ul>
             </div>
         </form>
@@ -48,12 +95,171 @@
             <div id="items"></div>
         </div>
 
-    </div>
-    <button id="backToTopBtn" class="btn btn-primary">
-        ↑ Top
-    </button>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="index.js"></script>
-</body>
+          <!-- About Section -->
+ <section id="about" class="about section">
+      <!-- Section Title -->
+      <div >
+        <span style="font-size:larger; border-radius: 2px; background-color: rgb(177, 176, 176);">ABOUT Us<br></span>
+        <h1>About TASTY BITES</h1>
+        <h2>A vast collection of recipes...</h2>
+      </div><!-- End Section Title -->
 
+      <div class="container">
+
+        <div class="row gy-1">
+          <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="100">
+           <!-- <img src="img2.png" class="img-fluid" alt="">-->
+           <a href="https://www.youtube.com/watch?v=XmO_IvaDKjU" class="glightbox pulsating-play-btn">
+              <img src="img1.png" class="img-fluid"alt="Play Video" >
+              <span class="play-overlay">
+               <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 12.192V3.808a.5.5 0 0 1 .757-.429l6.363 3.692a.5.5 0 0 1 0 .858z"/>
+                 </svg>
+                 </span>
+            </a>
+          </div>
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
+            <h3>A prototype model for developing best cooking experience to the home cooks.</h3>
+            <p class="fst-italic">
+                Tasty Bites is a web application designed to provide users with a vast collection of recipes, allowing them to search for meals, view details, and explore various cuisines. The application features a user-friendly interface, enabling easy navigation and interaction. 
+            </p>
+            <ul>
+              <li><i class="bi bi-check2-all"></i> <span>This website also help to promote responsible and interesting cooking experience so that people can enjoy their home cooking experiment.</span></li>
+              <li><i class="bi bi-check2-all"></i> <span>This website gives the cook complete ingredient list, detailed recipe, and a suggested guide video.</span></li>
+              <li><i class="bi bi-check2-all"></i> <span>Future plan to add more features, such as user authentication and adding of any information without any complexity.</span></li>
+            </ul>
+            <p>
+            One of the challenges i faced was implementing a robust search algorithm to ensure accurate and relevant results. I overcame by using a natural language processing library. Additionally, I focused on creating a responsive design to ensure compatibility across various devices, enhancing the user experience.
+            </p>
+          </div>
+        </div>
+</div>
+ </section>
+<!-- /About Section -->
+    <!-- ...existing code... -->
+     
+     <!--more recipes start-->
+<section id="more" class="more section">
+      <!-- Section Title -->
+      <div style="text-align: center;" >
+         <h1>Explore Best Recipes... </h1>
+  <p> These are some of the best recipes loved by the readers. Prepare and enjoy these recipes with your friends and family. </p>
+      </div>
+      <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+      <a href="popular.html" class="btn btn-primary rounded-pill px-4 py-2">Popular</a>
+      <a href="#quick" class="btn btn-success rounded-pill px-4 py-2">Quick & Easy</a>
+      <a href="#healthy" class="btn btn-warning rounded-pill px-4 py-2 text-white">Healthy</a>
+      <a href="#desserts" class="btn btn-danger rounded-pill px-4 py-2">Desserts</a>
+    </div>
+      </section>
+      <!-- End Section Title -->
+
+<!--more recipes end-->
+    
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+         <h2>Contact</h2>
+        <p>Feel Free to satisfy your Queries.</p>
+      <!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-5">
+
+            <div class="info-wrap">
+              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                <i class="bi bi-geo-alt-fill me-3"></i>
+                <div>
+                  <h3>📍Address</h3>
+                  <p>98QF+6QC Mathematics Department, Ranchi University, Morabadi, Ranchi, Jharkhand 834008</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                <i class="bi bi-telephone-fill me-2"></i>
+                <div >
+                  <h3> ☎ Call Us</h3>
+                  <p>+91 9546604898</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                <i class="bi bi-envelope-fill me-2"></i>
+                <div>
+                  <h3>✉Email Us</h3>
+                  <p>jayantibakhla999@gmail.com</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+              <div class="row gy-4">
+
+                <div class="col-md-6">
+                  <label for="name-field" class="pb-2">Your Name</label>
+                  <input type="text" name="name" id="name-field" class="form-control" required="">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="email-field" class="pb-2">Your Email</label>
+                  <input type="email" class="form-control" name="email" id="email-field" required="">
+                </div>
+
+                <div class="col-md-12">
+                  <label for="subject-field" class="pb-2">Subject</label>
+                  <input type="text" class="form-control" name="subject" id="subject-field" required="">
+                </div>
+
+                <div class="col-md-12">
+                  <label for="message-field" class="pb-2">Message</label>
+                  <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
+                </div>
+                  <button type="submit">Send Message</button>
+                </div>
+
+              </div>
+            </form>
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+</div>
+    </section>
+    <!-- /Contact Section -->
+
+
+
+<button id="backToTopBtn" class="btn btn-primary" style="position: fixed; bottom: 40px; left: 40px; display: none; z-index: 999;">
+    ↑ Top
+</button>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="index.js"></script>
+<script>
+// Show button when scrolled down 200px
+window.onscroll = function() {
+    document.getElementById("backToTopBtn").style.display =
+        (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "block" : "none";
+};
+// Smooth scroll to top
+document.getElementById("backToTopBtn").onclick = function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+<script>
+  const lightbox = GLightbox();
+</script>
+ 
+</body>
 </html>
