@@ -20,12 +20,17 @@ if ($result->num_rows === 1) {
         // session_start();
         // $_SESSION['user_id'] = $user['id'];
         // $_SESSION['username'] = $user['username'];
-    } else {
+    session_start();
+$_SESSION['user_id'] = $user['id'];
+$_SESSION['username'] = $user['username'];
+// Redirect to dashboard
+header("Location: dashboard.php");
+exit;
+} else {
         echo "Invalid password.";
     }
 } else {
     echo "No user found with that email.";
 }
-
 $conn->close();
 ?>
