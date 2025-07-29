@@ -16,7 +16,8 @@ $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Secure hash
 $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Signup successful!";
+    header("Location: login.html");
+    exit();
 } else {
     echo "Error: " . $conn->error;
 }
