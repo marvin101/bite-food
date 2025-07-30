@@ -5,13 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign In - Tasty Bites</title>
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="signin.css">
   <style>
 
   </style>
 </head>
-<body>
+<!-- <body>
   <div class="navbar">
     <h1>Tasty Bites</h1>
     <a href="index.html">Home</a>
@@ -28,5 +28,27 @@
     <button type="submit">Sign In</button>
     <a href="signup.html">Don't have an account? Sign Up</a>
   </div>
+</body> -->
+
+<body>
+    <div class="wrapper">
+    <form action="index.html" method="post">
+        <h1>Sign In</h1>
+        <div class="input-box">
+  <input type="email" name="email" placeholder="Email Address" required>
+    <i class="bi bi-person-fill"></i>
+<br>
+  </div>
+  <div class="input-box">
+  <input type="password" name="password" placeholder="Password" required>
+  <i class="bi bi-lock-fill"></i><br>
+  </div>
+  <button type="submit" class="btn">Sign In </button>
+
+  <div class="register-link">
+    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+  </div>
+</form>
+</div>
 </body>
 </html>
