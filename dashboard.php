@@ -78,8 +78,8 @@ if (!isset($_SESSION['user_id'])) {
         <h2>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h2>
         <p>You have successfully logged in to your dashboard.</p>
 
-        <form action="logout.php" method="post">
-            <button type="submit">Log Out</button>
+        <form action="index.html" method="post">
+            <button type="submit">Log in</button>
         </form>
     </div>
 
