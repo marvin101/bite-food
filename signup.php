@@ -1,3 +1,4 @@
+require 'db.php';
 <?php
 // Connect to MySQL
 $conn = new mysqli("localhost", "root", "", "user_auth");

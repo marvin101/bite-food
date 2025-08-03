@@ -1,3 +1,4 @@
+require 'db.php';
 <?php
 session_start();
 
@@ -79,7 +80,7 @@ if (!isset($_SESSION['user_id'])) {
         <p>You have successfully logged in to your dashboard.</p>
 
         <form action="index.html" method="post">
-            <button type="submit">Log in</button>
+            <!-- <button type="submit">Log in</button> -->
         </form>
     </div>
 
