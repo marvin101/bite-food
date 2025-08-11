@@ -1,5 +1,5 @@
-require 'db.php';
 <?php
+require 'db.php';
 session_start();
 
 // Check if the user is logged in

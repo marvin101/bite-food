@@ -1,11 +1,16 @@
 <?php
-$servername = "192.168.0.100";  // Check this in cPanel → MySQL → DB hostname
-$username = "bitefood_users_db";       // The MySQL username you created
-$password = "Nn4ABqdBv5SxSdqD6EX8";       // The MySQL password
-$dbname = "bitefood_users_db";             // The name of your database
+// Ensure the mysqli extension is loaded
+if (!extension_loaded('mysqli')) {
+    die('The mysqli extension is not enabled in your PHP installation.');
+}
+
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'user_auth');
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 // Check connection
 if ($conn->connect_error) {
