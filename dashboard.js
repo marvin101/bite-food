@@ -33,40 +33,12 @@ window.addEventListener('resize', function() {
   }
 });
 
-// Simple chat UI logic (no backend)
-const chatForm = document.getElementById('chatForm');
-const chatInput = document.getElementById('chatInput');
-const chatMessages = document.getElementById('chatMessages');
-
-chatForm.addEventListener('submit', function(e) {
-  e.preventDefault();
-  const userMsg = chatInput.value.trim();
-  if (!userMsg) return;
-  // Add user message
-  const userDiv = document.createElement('div');
-  userDiv.className = 'chat-message user';
-  userDiv.innerHTML = '<div class="message-content">' + userMsg + '</div>';
-  chatMessages.appendChild(userDiv);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-  chatInput.value = '';
-
-  // Simulate bot reply
-  setTimeout(function() {
-    const botDiv = document.createElement('div');
-    botDiv.className = 'chat-message bot';
-    botDiv.innerHTML = '<div class="message-content">Sorry, I am a demo! (You said: ' + userMsg + ')</div>';
-    chatMessages.appendChild(botDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }, 700);
-});
-
 // Simulate login state (set by backend in real app)
 window.isLoggedIn = typeof window.username !== "undefined" && window.username !== null;
 
 // --- Liked Recipes Logic ---
 const likedRecipesPanel = document.getElementById('likedRecipes');
 
-// Store liked recipes in localStorage for demo
 function getLikedRecipes() {
   return JSON.parse(localStorage.getItem('likedRecipes') || '[]');
 }
@@ -74,7 +46,6 @@ function saveLikedRecipes(recipes) {
   localStorage.setItem('likedRecipes', JSON.stringify(recipes));
 }
 
-// --- Liked Recipes Logic ---
 function renderLikedRecipes() {
   const liked = getLikedRecipes();
   likedRecipesPanel.innerHTML = '';
@@ -100,28 +71,33 @@ function renderLikedRecipes() {
 if (likedRecipesPanel) {
   renderLikedRecipes();
 }
-  shareRecipeForm.reset();
-  renderSearchResults();
 
-// --- Liked Recipes Logic ---
-function renderLikedRecipes() {
-  const liked = getLikedRecipes();
-  likedRecipesPanel.innerHTML = '';
-  if (liked.length === 0) {
-    likedRecipesPanel.innerHTML = '<div class="text-muted">No liked recipes yet.</div>';
-    return;
-  }
-  liked.forEach(recipe => {
-    const div = document.createElement('div');
-    div.className = 'col-12 col-md-6 col-lg-4';
-    div.innerHTML = `
-      <div class="recipe-card">
-        <div class="recipe-card-title">${recipe.title}</div>
-        <div class="recipe-card-ingredients"><b>Ingredients:</b> ${recipe.ingredients}</div>
-        <div class="recipe-card-instructions"><b>Instructions:</b> ${recipe.instructions}</div>
-      </div>
-    `;
-    likedRecipesPanel.appendChild(div);
+// Simple chat UI logic (no backend)
+const chatForm = document.getElementById('chatForm');
+const chatInput = document.getElementById('chatInput');
+const chatMessages = document.getElementById('chatMessages');
+
+if (chatForm) {
+  chatForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const userMsg = chatInput.value.trim();
+    if (!userMsg) return;
+    // Add user message
+    const userDiv = document.createElement('div');
+    userDiv.className = 'chat-message user';
+    userDiv.innerHTML = '<div class="message-content">' + userMsg + '</div>';
+    chatMessages.appendChild(userDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    chatInput.value = '';
+
+    // Simulate bot reply
+    setTimeout(function() {
+      const botDiv = document.createElement('div');
+      botDiv.className = 'chat-message bot';
+      botDiv.innerHTML = '<div class="message-content">Sorry, I am a demo! (You said: ' + userMsg + ')</div>';
+      chatMessages.appendChild(botDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 700);
   });
 }
 
@@ -179,6 +155,28 @@ function renderSearchResults() {
     });
   });
 }
+
+// Initial render
+if (searchResults && likedRecipesPanel) {
+  renderSearchResults();
+  renderLikedRecipes();
+}
+        loginModal.show();
+        return;
+      let liked = getLikedRecipes();
+      const recipes = getSharedRecipes();
+      const recipe = recipes.find(r => r.id === recipeId);
+      if (!recipe) return;
+      if (liked.some(r => r.id === recipeId)) {
+        // Remove from liked
+        liked = liked.filter(r => r.id !== recipeId);
+      } else {
+        // Add to liked
+        liked.unshift(recipe);
+      }
+      saveLikedRecipes(liked);
+renderLikedRecipes();
+renderSearchResults();
 
 // Initial render
 if (searchResults && likedRecipesPanel) {

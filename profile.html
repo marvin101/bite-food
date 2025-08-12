@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Tasty Bites</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+    <div class="profile-container">
+        <a href="index.html" class="logo-link d-block text-center mb-3">
+            <img src="logo.png" alt="Tasty Bite logo" style="height:32px;width:auto;">
+        </a>
+        <h1>My Profile</h1>
+        <div class="profile-card">
+            <img src="{{PROFILE_IMG}}" alt="Profile Picture" class="profile-img">
+            <h2>{{USERNAME}}</h2>
+            <p><strong>Email:</strong> {{EMAIL}}</p>
+        </div>
+        <form action="update_profile.php" method="POST" enctype="multipart/form-data">
+            <label for="profile_pic" style="font-weight:500;">Change Profile Picture:</label>
+            <input type="file" name="profile_pic" id="profile_pic" class="form-control mb-2">
+            <button type="submit" class="btn btn-primary w-100">Update Profile</button>
+        </form>
+    </div>
+</body>
+</html>
+</html>

@@ -14,6 +14,14 @@
   <!-- <link rel="stylesheet" href="signup.css"> -->
 </head>
 <body>
+  <div id="theme-toggle-wrapper" class="position-fixed top-0 end-0 p-2 z-index-fixed">
+    <div class="d-flex align-items-center">
+      <label class="form-check-label me-2 mb-0 text-dark" for="themeToggleSwitch">Dark Mode</label>
+      <div class="form-check form-switch m-0">
+        <input class="form-check-input" type="checkbox" id="themeToggleSwitch">
+      </div>
+    </div>
+  </div>
   <div class="glass-box">
     <a href="index.html" class="logo-link d-block text-center mb-3">
       <img src="logo.png" alt="Tasty Bite logo" style="height: 150px;width:auto;">
@@ -35,8 +43,27 @@
       </div>
     </form>
   </div>
-</body>
-</html>
-</div>
+  <script>
+  // Dark mode toggle logic
+  (function() {
+      const toggle = document.getElementById('themeToggleSwitch');
+      const body = document.body;
+      if (localStorage.getItem('darkMode') === 'true') {
+          body.classList.add('dark-mode');
+          if (toggle) toggle.checked = true;
+      }
+      if (toggle) {
+          toggle.addEventListener('change', function() {
+              if (toggle.checked) {
+                  body.classList.add('dark-mode');
+                  localStorage.setItem('darkMode', 'true');
+              } else {
+                  body.classList.remove('dark-mode');
+                  localStorage.setItem('darkMode', 'false');
+              }
+          });
+      }
+  })();
+  </script>
 </body>
 </html>
