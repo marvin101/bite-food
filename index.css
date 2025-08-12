@@ -494,12 +494,11 @@ font-size: 24px;
   margin-bottom: 10px;
 }
 .logo-link img {
-  height: 40px;
-  width: auto;
+  height: 32px !important;
+  width: auto !important;
   border-radius: 8px;
-  transition: box-shadow 0.2s;
   box-shadow: 0 2px 8px rgba(56, 169, 219, 0.10);
-}
-.logo-link img:hover {
-  box-shadow: 0 4px 16px rgba(67, 233, 123, 0.18);
+  margin-bottom: 10px;
+  transition: box-shadow 0.2s;
+  object-fit: contain;
 }

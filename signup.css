@@ -70,12 +70,13 @@ body {
       font-weight: 500;
     }
     .logo-link img {
-      height: 48px;
-      width: auto;
-      border-radius: 10px;
+      height: 32px !important;
+      width: auto !important;
+      border-radius: 8px;
       box-shadow: 0 2px 8px rgba(56, 169, 219, 0.10);
       margin-bottom: 10px;
       transition: box-shadow 0.2s;
+      object-fit: contain;
     }
     .logo-link img:hover {
       box-shadow: 0 4px 16px rgba(67, 233, 123, 0.18);
