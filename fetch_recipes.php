@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require 'db.php';
 
 if (!isset($_SESSION['user_id'])) {
@@ -17,13 +19,12 @@ if ($result->num_rows === 0) {
 } else {
     while ($row = $result->fetch_assoc()) {
         echo "<div class='recipe-card'>";
-        echo "<h3>" . htmlspecialchars($row['title']) . "</h3>";
-        if ($row['image_url']) {
-            echo "<img src='" . htmlspecialchars($row['image_url']) . "' width='200'>";
+        echo "<h4>" . htmlspecialchars($row['title']) . "</h4>";
+        if (!empty($row['image_url'])) {
+            echo "<img src='" . htmlspecialchars($row['image_url']) . "' alt='Recipe Image' style='max-width:100%;border-radius:8px;margin-bottom:10px;'>";
         }
         echo "<p><strong>Ingredients:</strong> " . htmlspecialchars($row['ingredients']) . "</p>";
-        echo "<p><strong>Instructions:</strong><br>" . nl2br(htmlspecialchars($row['instructions'])) . "</p>";
-        echo "<hr>";
+        echo "<p><strong>Instructions:</strong> " . nl2br(htmlspecialchars($row['instructions'])) . "</p>";
         echo "</div>";
     }
 }

@@ -63,19 +63,10 @@ chatForm.addEventListener('submit', function(e) {
 // Simulate login state (set by backend in real app)
 window.isLoggedIn = typeof window.username !== "undefined" && window.username !== null;
 
-// --- Share Recipe Logic ---
-const shareRecipeForm = document.getElementById('shareRecipeForm');
-const shareRecipeMsg = document.getElementById('shareRecipeMsg');
-const searchResults = document.getElementById('searchResults');
+// --- Liked Recipes Logic ---
 const likedRecipesPanel = document.getElementById('likedRecipes');
 
-// Store recipes and liked recipes in localStorage for demo
-function getSharedRecipes() {
-  return JSON.parse(localStorage.getItem('sharedRecipes') || '[]');
-}
-function saveSharedRecipes(recipes) {
-  localStorage.setItem('sharedRecipes', JSON.stringify(recipes));
-}
+// Store liked recipes in localStorage for demo
 function getLikedRecipes() {
   return JSON.parse(localStorage.getItem('likedRecipes') || '[]');
 }
@@ -83,27 +74,34 @@ function saveLikedRecipes(recipes) {
   localStorage.setItem('likedRecipes', JSON.stringify(recipes));
 }
 
-// Handle share recipe form submit
-if (shareRecipeForm) {
-  shareRecipeForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const title = document.getElementById('recipeTitle').value.trim();
-    const ingredients = document.getElementById('recipeIngredients').value.trim();
-    const instructions = document.getElementById('recipeInstructions').value.trim();
-    if (!title || !ingredients || !instructions) return;
-    const recipes = getSharedRecipes();
-    recipes.unshift({
-      id: Date.now(),
-      title,
-      ingredients,
-      instructions
-    });
-    saveSharedRecipes(recipes);
-    shareRecipeMsg.textContent = "Recipe posted!";
-    shareRecipeForm.reset();
-    renderSearchResults();
+// --- Liked Recipes Logic ---
+function renderLikedRecipes() {
+  const liked = getLikedRecipes();
+  likedRecipesPanel.innerHTML = '';
+  if (liked.length === 0) {
+    likedRecipesPanel.innerHTML = '<div class="text-muted">No liked recipes yet.</div>';
+    return;
+  }
+  liked.forEach(recipe => {
+    const div = document.createElement('div');
+    div.className = 'col-12 col-md-6 col-lg-4';
+    div.innerHTML = `
+      <div class="recipe-card">
+        <div class="recipe-card-title">${recipe.title}</div>
+        <div class="recipe-card-ingredients"><b>Ingredients:</b> ${recipe.ingredients}</div>
+        <div class="recipe-card-instructions"><b>Instructions:</b> ${recipe.instructions}</div>
+      </div>
+    `;
+    likedRecipesPanel.appendChild(div);
   });
 }
+
+// Initial render
+if (likedRecipesPanel) {
+  renderLikedRecipes();
+}
+  shareRecipeForm.reset();
+  renderSearchResults();
 
 // --- Liked Recipes Logic ---
 function renderLikedRecipes() {

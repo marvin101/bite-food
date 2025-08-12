@@ -29,7 +29,7 @@ $stmt = $conn->prepare("INSERT INTO recipes (user_id, title, ingredients, instru
 $stmt->bind_param("issss", $_SESSION['user_id'], $title, $ingredients, $instructions, $image_url);
 
 if ($stmt->execute()) {
-    header("Location: dashboard.html");
+    header("Location: dashboard.php");
 } else {
     echo "Error: " . $stmt->error;
 }
