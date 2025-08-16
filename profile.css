@@ -6,11 +6,37 @@ body {
     padding: 0;
 }
 
+/* Ensure profile content sits above large hero/parallax areas and is visible near top */
+#content {
+    padding-top: 18px; /* reduce excess top spacing caused by page layout */
+    position: relative;
+    z-index: 2200;
+}
+
+/* Hide dashboard-style large parallax/hero section for profile page */
+.parallax-results-bg,
+.header-hero,
+.hero-section {
+    display: none !important;
+}
+
+/* Make profile container more prominent and keep it above layers */
+.profile-container {
+    position: relative;
+    z-index: 2300;
+    margin-top: 24px; /* smaller top gap so card is visible immediately */
+    background: rgba(255,255,255,0.95); /* ensure readability over background */
+}
+
+body > .profile-container {
+    margin-top: 24px;
+}
+
 .profile-container {
     max-width: 420px;
     margin: 60px auto;
     padding: 2.25rem 1.75rem;
-    background: rgba(255, 255, 255, 0.18);
+    background: rgba(172, 184, 10, 0.18);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-radius: 18px;
