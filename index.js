@@ -158,26 +158,80 @@ if (typeof document !== 'undefined' && document && typeof document.addEventListe
 	    });
 	  }
 
-	  // Suggestions (guarded)
+	  // Suggestions (guarded) — replaced with API-driven, debounced suggestions
 	  if (input && suggestions) {
-	    const meals = ["Pizza", "Pasta", "Paneer", "Pav Bhaji", "Pancake", "Paratha", "Pulao", "Pudding"];
-	    input.addEventListener('input', function () {
-	      const val = this.value.trim().toLowerCase();
+	    // debounce helper
+	    function debounce(fn, delay) {
+	      let t;
+	      return function(...args) {
+	        clearTimeout(t);
+	        t = setTimeout(() => fn.apply(this, args), delay);
+	      };
+	    }
+
+	    // populate suggestion list and show it
+	    function showSuggestions(list) {
 	      suggestions.innerHTML = '';
-	      if (!val) { suggestions.style.display = 'none'; return; }
-	      const filtered = meals.filter(m => m.toLowerCase().includes(val));
-	      if (!filtered.length) { suggestions.style.display = 'none'; return; }
-	      filtered.forEach(meal => {
+	      if (!list || list.length === 0) {
+	        suggestions.classList.remove('show');
+	        suggestions.style.display = 'none';
+	        return;
+	      }
+	      list.slice(0, 8).forEach(name => {
 	        const li = document.createElement('li');
 	        li.className = 'list-group-item';
-	        li.textContent = meal;
-	        li.onclick = function () { input.value = meal; suggestions.style.display = 'none'; };
+	        li.textContent = name;
+	        li.onclick = function() {
+	          input.value = name;
+	          suggestions.classList.remove('show');
+	          suggestions.style.display = 'none';
+	        };
 	        suggestions.appendChild(li);
 	      });
+	      suggestions.classList.add('show');
+	      // ensure visible (override any inline display:none)
 	      suggestions.style.display = 'block';
-	    });
-	    document.addEventListener('click', function (e) {
-	      if (!input.contains(e.target) && !suggestions.contains(e.target)) suggestions.style.display = 'none';
+	    }
+
+	    // fetch suggestions from TheMealDB (search by name) — returns meals matching substring
+	    const fetchSuggestions = debounce(function() {
+	      const q = input.value.trim();
+	      if (q.length < 3) {
+	        suggestions.classList.remove('show');
+	        suggestions.innerHTML = '';
+	        suggestions.style.display = 'none';
+	        return;
+	      }
+	      // call API
+	      fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(q)}`)
+	        .then(res => res.json())
+	        .then(data => {
+	          if (!data || !data.meals) {
+	            // no results
+	            showSuggestions([]);
+	            return;
+	          }
+	          // map meals to names and filter those containing the query (case-insensitive)
+	          const qLow = q.toLowerCase();
+	          const names = data.meals
+	            .map(m => m.strMeal)
+	            .filter(n => n && n.toLowerCase().includes(qLow));
+	          showSuggestions(names);
+	        })
+	        .catch(err => {
+	          console.error('Suggestions error:', err);
+	          showSuggestions([]);
+	        });
+	    }, 250);
+
+	    input.addEventListener('input', fetchSuggestions);
+
+	    // Hide suggestions when clicking outside
+	    document.addEventListener('click', function(e) {
+	      if (!input.contains(e.target) && !suggestions.contains(e.target)) {
+	        suggestions.classList.remove('show');
+	        suggestions.style.display = 'none';
+	      }
 	    });
 	  }
 	});
