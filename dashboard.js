@@ -4,23 +4,40 @@ document.addEventListener('DOMContentLoaded', function () {
 	const sidebar = document.getElementById('sidebar');
 	const overlay = document.getElementById('sidebarOverlay');
 
+	// Ensure initial hamburger visibility
+	if (sidebarBtn) {
+		if (window.innerWidth >= 992) {
+			sidebarBtn.style.display = 'none';
+		} else {
+			// show only when sidebar is not active
+			sidebarBtn.style.display = (sidebar && sidebar.classList.contains('active')) ? 'none' : 'inline-flex';
+		}
+	}
+
 	function openSidebar() {
 		if (!sidebar) return;
 		sidebar.classList.add('active');
 		if (overlay) overlay.style.display = 'block';
 		document.body.classList.add('sidebar-open');
+		// hide hamburger when sidebar is open (mobile)
+		if (sidebarBtn) sidebarBtn.style.display = 'none';
 	}
 	function closeSidebar() {
 		if (!sidebar) return;
 		sidebar.classList.remove('active');
 		if (overlay) overlay.style.display = 'none';
 		document.body.classList.remove('sidebar-open');
+		// show hamburger again on small screens, hide on desktop
+		if (sidebarBtn) {
+			if (window.innerWidth < 992) sidebarBtn.style.display = 'inline-flex';
+			else sidebarBtn.style.display = 'none';
+		}
 	}
 
+	// Toggle button
 	if (sidebarBtn && sidebar) {
 		sidebarBtn.addEventListener('click', function () {
-			if (!sidebar.classList.contains('active')) openSidebar();
-			else closeSidebar();
+			openSidebar();
 		});
 	}
 	if (overlay) {
@@ -29,12 +46,19 @@ document.addEventListener('DOMContentLoaded', function () {
 	document.addEventListener('keydown', function (e) {
 		if (e.key === 'Escape') closeSidebar();
 	});
+	// Ensure correct state on resize
 	window.addEventListener('resize', function () {
 		if (window.innerWidth >= 992) {
 			// ensure overlay is hidden and sidebar is not stuck open
 			if (overlay) overlay.style.display = 'none';
 			if (sidebar) sidebar.classList.remove('active');
 			document.body.classList.remove('sidebar-open');
+			if (sidebarBtn) sidebarBtn.style.display = 'none';
+		} else {
+			// small screens: show hamburger only when sidebar is closed
+			if (sidebarBtn) {
+				sidebarBtn.style.display = (sidebar && sidebar.classList.contains('active')) ? 'none' : 'inline-flex';
+			}
 		}
 	});
 
