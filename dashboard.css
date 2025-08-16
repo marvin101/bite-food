@@ -231,3 +231,35 @@ body {
 .modal {
     z-index: 2000;
 }
+
+/* Mobile hamburger button styling (fixed, above layout) */
+.mobile-hamburger {
+    display: none;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1102; /* above overlay (1049) and sidebar (1050) */
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 6px;
+    border-radius: 8px;
+    background: #212529;
+    color: #ffc107;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+/* show hamburger on small screens, hide on large screens */
+@media (max-width: 991.98px) {
+    .mobile-hamburger {
+        display: inline-flex;
+    }
+}
+/* ensure it is hidden on larger screens */
+@media (min-width: 992px) {
+    .mobile-hamburger {
+        display: none !important;
+    }
+}

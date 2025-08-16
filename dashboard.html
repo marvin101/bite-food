@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
-  <link rel="stylesheet" href="dashboard.css">
+  <!-- Use absolute path so the file is always found when served from /bite-food/ -->
+  <link rel="stylesheet" href="/bite-food/dashboard.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -19,14 +20,18 @@
       </div>
     </div>
   </div>
+
+  <!-- Mobile hamburger button (visible on small screens) -->
+  <button id="sidebarCollapse" class="mobile-hamburger btn btn-outline-secondary" type="button" aria-label="Toggle sidebar">
+    <i class="bi bi-list"></i>
+  </button>
+
   <div class="d-flex">
     <!-- Sidebar -->
     <nav id="sidebar" class="sidebar">
       <div class="sidebar-header">
         <h3>Dashboard</h3>
-        <button id="sidebarCollapse" class="btn btn-outline-secondary d-lg-none" type="button" aria-label="Toggle sidebar">
-          <i class="bi bi-list"></i>
-        </button>
+        <!-- removed in-sidebar hamburger to avoid it being off-screen on mobile -->
       </div>
       <ul class="list-unstyled components">
         <li><a href="index.html"><i class="bi bi-house"></i> Home</a></li>
