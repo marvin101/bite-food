@@ -63,7 +63,7 @@ composer install
 
 
 
-##Usage
+## Usage
 
 Register via signup.html.
 
@@ -76,7 +76,7 @@ Explore popular items (popular.html).
 Change settings via appropriate configuration UI.
 
 
-##Project Structure
+## Project Structure
 
 bite-food/
 ├── index.html  
@@ -93,15 +93,15 @@ bite-food/
 └── node_modules/ (if applicable)
 
 
-##Contributing
+## Contributing
 
 To make changes that you like create a fork.
 
-##License
+## License
 
 © 2025 marvin101
 
-##Contact
+## Contact
 
 ovqa1dgt@anonaddy.me, marvin101
 
