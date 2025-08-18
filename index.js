@@ -263,7 +263,65 @@ if (typeof document !== 'undefined' && document && typeof document.addEventListe
 	      .catch(() => { /* ignore errors */ });
 	  }
 
+	  // load categories into the navbar dropdown and wire clicks
+	  async function loadCategories() {
+	    const menu = document.getElementById('categoryDropdownMenu');
+	    const toggleBtn = document.getElementById('navbarCategoryDropdown');
+	    if (!menu) return;
+	    menu.innerHTML = '<li class="dropdown-item text-muted">Loading...</li>';
+	    try {
+	      const res = await fetch('https://www.themealdb.com/api/json/v1/1/categories.php');
+	      const data = await res.json();
+	      if (!data || !data.categories) { menu.innerHTML = '<li class="dropdown-item text-muted">No categories</li>'; return; }
+	      menu.innerHTML = '';
+	      data.categories.forEach(cat => {
+	        const li = document.createElement('li');
+	        const a = document.createElement('a');
+	        a.className = 'dropdown-item';
+	        a.href = '#';
+	        a.textContent = cat.strCategory;
+	        a.setAttribute('data-category', cat.strCategory);
+	        a.addEventListener('click', (e) => {
+	          e.preventDefault();
+	          performCategorySearch(cat.strCategory);
+	          // update toggle label slightly for user feedback (keeps caret)
+	          if (toggleBtn) toggleBtn.textContent = cat.strCategory;
+	        });
+	        li.appendChild(a);
+	        menu.appendChild(li);
+	      });
+	    } catch (err) {
+	      console.error('Failed to load categories', err);
+	      menu.innerHTML = '<li class="dropdown-item text-muted">Error loading categories</li>';
+	    }
+	  }
+
+	  // perform a category search and render tiles (uses existing recipeCardHtml + attachResultHandlers)
+	  async function performCategorySearch(category) {
+	    if (!items || !category) return;
+	    hideMsg();
+	    details.innerHTML = '';
+	    items.innerHTML = '<div class="text-muted p-3">Loading...</div>';
+	    try {
+	      const res = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(category)}`);
+	      const data = await res.json();
+	      if (!data || !data.meals) {
+	        items.innerHTML = '<div class="p-3">No recipes found for this category.</div>';
+	        return;
+	      }
+	      items.innerHTML = data.meals.map(m => recipeCardHtml(m)).join('');
+	      attachResultHandlers(items);
+	      updateNavUser();
+	      // scroll to results
+	      items.scrollIntoView({ behavior: 'smooth' });
+	    } catch (err) {
+	      console.error('Category search failed', err);
+	      items.innerHTML = '<div class="p-3 text-danger">Error fetching category recipes.</div>';
+	    }
+	  }
+
 	  updateNavUser(); // Initial call to set up nav user info
+	  loadCategories(); // ensure categories are loaded on page ready
 	});
 } else {
 	// Not running in a browser DOM (or script loaded incorrectly). No-op to avoid runtime errors.
