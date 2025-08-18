@@ -22,7 +22,7 @@ A web-based application (likely a food-related dashboard) built with PHP, JavaSc
 Describe what the project does (e.g., a dashboard to explore popular food dishes, user favorite management, etc.). Share the main goal—what problem it aims to solve or what functionality it provides.
 
 ## Features  
-- User sign-up and login (based on presence of `signup.html`, `login.php`)  
+- User sign-up and login (based on presence of `signup.html`, `signin.php`)  
 - Dashboard interface (`dashboard.html`, `dashboard.js`, `dashboard.php`)  
 - Display of popular items or categories (`popular.html`)  
 - Settings or profile management (`settings.json`, `settings.css`)  
@@ -67,7 +67,7 @@ composer install
 
 Register via signup.html.
 
-Login with login.html → proceeds to your dashboard.
+Login with signin.html → proceeds to your dashboard.
 
 Navigate through dashboard.html for insights, logout using provided link.
 
@@ -81,7 +81,7 @@ Change settings via appropriate configuration UI.
 bite-food/
 ├── index.html  
 ├── signup.html, signup.php  
-├── login.html, login.php  
+├── signin.html, signin.php  
 ├── dashboard.html, dashboard.js, dashboard.php  
 ├── popular.html  
 ├── settings.json, signup.css  

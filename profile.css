@@ -1,87 +1,87 @@
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: url('img2.png') no-repeat center center fixed;
-    background-size: cover;
-    margin: 0;
-    padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: url('img2.png') no-repeat center center fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
 }
 
-/* Ensure profile content sits above large hero/parallax areas and is visible near top */
+/* Ensure profile content sits above hero/parallax and has room when sidebar present */
 #content {
-    padding-top: 18px; /* reduce excess top spacing caused by page layout */
-    position: relative;
-    z-index: 2200;
+  padding-top: 18px;
+  position: relative;
+  z-index: 2200;
 }
 
-/* Hide dashboard-style large parallax/hero section for profile page */
+/* Hide any large hero on profile page */
 .parallax-results-bg,
 .header-hero,
 .hero-section {
-    display: none !important;
+  display: none !important;
 }
 
-/* Make profile container more prominent and keep it above layers */
+/* Profile container */
 .profile-container {
-    position: relative;
-    z-index: 2300;
-    margin-top: 24px; /* smaller top gap so card is visible immediately */
-    background: rgba(255,255,255,0.95); /* ensure readability over background */
+  position: relative;
+  z-index: 2300;
+  margin: 24px auto;
+  max-width: 720px;
+  padding: 2rem;
+  background: rgba(255,255,255,0.95);
+  border-radius: 18px;
+  border: 1px solid rgba(0,0,0,0.06);
+  color: #1b4d3e;
+  box-shadow: 0 8px 32px rgba(31,38,135,0.12);
 }
 
-body > .profile-container {
-    margin-top: 24px;
+/* Compact variant for smaller screens */
+@media (max-width: 576px) {
+  .profile-container { margin: 20px; padding: 1.5rem; max-width: calc(100% - 40px); }
 }
 
-.profile-container {
-    max-width: 420px;
-    margin: 60px auto;
-    padding: 2.25rem 1.75rem;
-    background: rgba(172, 184, 10, 0.18);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 18px;
-    border: 1.5px solid rgba(255,255,255,0.35);
-    color: #1b4d3e;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
-}
+/* Logo */
+.logo-link { display: block; text-align: center; margin-bottom: 12px; }
+.logo-link img { height: 48px; width: auto; border-radius: 10px; box-shadow: 0 2px 8px rgba(56,169,219,0.10); }
 
-.logo-link {
-    display: block;
-    text-align: center;
-    margin-bottom: 12px;
-}
-
-.logo-link img {
-    height: 48px;
-    width: auto;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(56,169,219,0.10);
-    transition: box-shadow 0.2s;
-}
-
-.logo-link img:hover { 
-    box-shadow: 0 4px 16px rgba(67,233,123,0.18); 
-}
-
-.profile-container h1 {
-    text-align: center;
-    color: #38a1db;
-    margin: 6px 0 14px;
-    font-weight: 700;
-    letter-spacing: 0.6px;
-}
-
+/* Profile card */
 .profile-card {
-    background: rgba(255,255,255,0.92);
-    padding: 18px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 4px 18px rgba(31,38,135,0.08);
-    margin-bottom: 14px;
+  background: rgba(255,255,255,0.98);
+  padding: 18px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(31,38,135,0.08);
+  margin-bottom: 16px;
 }
-
 .profile-img {
-    width: 130px;
+  width: 130px; height: 130px; border-radius: 50%; object-fit: cover;
+  margin-bottom: 12px; border: 4px solid rgba(255,255,255,0.8);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.profile-card h2 { margin: 6px 0 4px; font-size: 1.25rem; color: #1b4d3e; }
+.profile-card p { margin: 4px 0; color: #4b5563; font-size: 0.95rem; }
+
+/* Form */
+.update-profile-form label { display:block; margin-bottom:8px; color:#1b4d3e; font-weight:600; }
+.form-control, .form-control-file {
+  width:100%; padding:10px; margin-bottom:12px; border-radius:10px; border:1px solid #e0e0e0;
+  background: rgba(255,255,255,0.98); color: #1b4d3e;
+}
+.form-control:focus { border:1.5px solid #38a1db; outline:none; }
+form .btn { width:100%; padding:12px; background: linear-gradient(90deg,#43e97b,#38a1db); border:none; color:#fff; font-weight:700; border-radius:10px; }
+
+/* Region suggestions dropdown */
+.region-suggestions {
+  position: absolute; top: calc(100% + 6px); left: 0; right: 0; max-height: 220px; overflow-y: auto;
+  z-index: 3000; display: none; margin: 0; padding: 0; list-style: none; border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12); background: #fff; border: 1px solid rgba(0,0,0,0.06);
+}
+.region-suggestions .list-group-item { cursor: pointer; padding: 8px 12px; }
+.region-suggestions .list-group-item.active, .region-suggestions .list-group-item:hover { background: linear-gradient(90deg,#e6f6f0,#eaf6ff); }
+
+/* Small responsive tweaks */
+@media (max-width: 576px) {
+  .profile-img { width: 110px; height: 110px; }
+}
     height: 130px;
     border-radius: 50%;
     object-fit: cover;

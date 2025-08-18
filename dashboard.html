@@ -58,7 +58,8 @@
             <textarea class="form-control" name="instructions" rows="2" placeholder="Instructions" required></textarea>
           </div>
           <div class="col-12">
-            <input type="file" class="form-control" name="image">
+            <label for="recipeImage" class="form-label">Recipe Image</label>
+            <input type="file" class="form-control" name="image" id="recipeImage" title="Upload a recipe image" placeholder="Choose an image">
           </div>
           <div class="col-12">
             <button type="submit" class="btn btn-primary">Post Recipe</button>
@@ -96,14 +97,14 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="loginPromptLabel">Login Required</h5>
+          <h5 class="modal-title" id="loginPromptLabel">Sign-in Required</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           Please log in to add recipes to your favourites.
         </div>
         <div class="modal-footer">
-          <a href="login.html" class="btn btn-primary">Login</a>
+          <a href="signin.html" class="btn btn-primary">Sign In</a>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         </div>
       </div>

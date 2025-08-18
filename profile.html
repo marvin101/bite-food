@@ -48,6 +48,14 @@
                     <p><strong>Region:</strong> <span id="profileRegion">{{REGION}}</span></p>
                 </div>
 
+                <!-- Liked recipes injected by profile.php -->
+                <div class="liked-recipes-panel mb-4">
+                    <h4>Your Liked Recipes</h4>
+                    <div id="likedRecipes">
+                        {{LIKED_RECIPES}}
+                    </div>
+                </div>
+
                 <!-- Update form -->
                 <form action="profile.php" method="POST" enctype="multipart/form-data" class="update-profile-form" autocomplete="off">
                     <label for="username">Change Username</label>

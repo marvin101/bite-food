@@ -1,7 +1,7 @@
 .glass-effect {
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 32px rgba(31, 38, 135, 0.3);
@@ -384,7 +384,7 @@ body.dark-mode .btn-secondary:hover {
   border-radius: 0;
   color: var(--default-color);
   background-color: var(--surface-color);
-  border-color: color-mix(in srgb, var(--default-color), transparent 80%);
+  border-color: #cccccc; /* fallback for unsupported browsers */
 }
 
 .contact .php-email-form input[type=text]:focus,
@@ -396,7 +396,7 @@ body.dark-mode .btn-secondary:hover {
 .contact .php-email-form input[type=text]::placeholder,
 .contact .php-email-form input[type=email]::placeholder,
 .contact .php-email-form textarea::placeholder {
-  color: color-mix(in srgb, var(--default-color), transparent 70%);
+  color: #b3b3b3; /* fallback for color-mix(in srgb, var(--default-color), transparent 70%) */
 }
 
 .contact .php-email-form button[type=submit] {

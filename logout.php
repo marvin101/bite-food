@@ -12,7 +12,7 @@ header("Expires: 0");
 session_unset();
 session_destroy();
 
-// Redirect to login (replace with login.php or login.html as you prefer)
-header("Location: login.php");
+// Redirect to login (replace with signin.php or signin.html as you prefer)
+header("Location: signin.php");
 exit;
 ?>
