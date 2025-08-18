@@ -82,67 +82,61 @@ form .btn { width:100%; padding:12px; background: linear-gradient(90deg,#43e97b,
 @media (max-width: 576px) {
   .profile-img { width: 110px; height: 110px; }
 }
-    height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
-    display: inline-block;
-    margin-bottom: 12px;
-    border: 4px solid rgba(255,255,255,0.8);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+/* Compact liked items grid */
+.liked-compact-grid { margin: 0; padding: 0; }
+.liked-item {
+  background: transparent;
+  border-radius: 10px;
+  padding: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+  user-select: none;
+}
+.liked-item:hover { transform: translateY(-6px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+
+.liked-thumb-wrap {
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #f2f2f2;
+  display:flex; align-items:center; justify-content:center;
+}
+.liked-thumb {
+  width: 100%; height: 100%; object-fit: cover; display:block;
 }
 
-.profile-card h2 {
-    margin: 6px 0 4px;
-    font-size: 1.25rem;
-    color: #1b4d3e;
+.liked-title {
+  margin-top: 8px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: #1b4d3e;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-.profile-card p {
-    margin: 4px 0;
-    color: #4b5563;
-    font-size: 0.95rem;
+/* hidden details */
+.liked-details {
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(255,255,255,0.98);
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  text-align: left;
+  max-height: 480px;
+  overflow: auto;
 }
 
-form {
-    margin-top: 12px;
-    background: transparent;
-    padding: 0;
-    border-radius: 8px;
-}
+/* expanded modifier */
+/* .liked-item.expanded class present for targeting if desired, but no rules needed */
 
-form label {
-    display: block;
-    margin-bottom: 8px;
-    color: #1b4d3e;
-    font-weight: 600;
-}
-
-.form-control, input.form-control, .form-control-file {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
-    border-radius: 10px;
-    border: 1px solid #e0e0e0;
-    background: rgba(255,255,255,0.95);
-    color: #1b4d3e;
-    transition: border 0.15s;
-}
-
-.form-control:focus {
-    border: 1.5px solid #38a1db;
-    outline: none;
-}
-
-form .btn {
-    width: 100%;
-    padding: 12px;
-    background: linear-gradient(90deg,#43e97b,#38a1db);
-    border: none;
-    color: #fff;
-    font-weight: 700;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(56,169,219,0.10);
+/* small responsive tweak */
+@media (max-width: 576px) {
+  .liked-thumb-wrap { height: 120px; }
+  .liked-title { font-size: 0.95rem; }
 }
 
 form .btn:hover {

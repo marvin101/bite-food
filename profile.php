@@ -8,10 +8,9 @@ header("Expires: 0");
 require 'db.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: signin.html");
+    header("Location: signin.php");
     exit();
 }
-
 $user_id = $_SESSION['user_id'];
 
 // Check if $conn is valid and handle DB errors
@@ -91,14 +90,14 @@ if ($lstmt) {
     if ($lres && $lres->num_rows > 0) {
         $liked_html = '<div class="row g-3">';
         while ($lr = $lres->fetch_assoc()) {
-            $liked_html .= '<div class="col-12">';
+            $liked_html .= '<div class="col-12 col-sm-6 col-md-4">';
             $liked_html .= '<div class="recipe-card">';
             if (!empty($lr['thumbnail'])) {
-                $liked_html .= '<img src="'.htmlspecialchars($lr['thumbnail']).'" alt="'.htmlspecialchars($lr['title']).'" style="max-width:120px;border-radius:8px;margin-bottom:8px;">';
+                $liked_html .= '<img src="'.htmlspecialchars($lr['thumbnail']).'" alt="'.htmlspecialchars($lr['title']).'" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:8px;">';
             }
             $liked_html .= '<div class="recipe-card-title">'.htmlspecialchars($lr['title']).'</div>';
             if (!empty($lr['ingredients'])) $liked_html .= '<div class="recipe-card-ingredients"><b>Ingredients:</b> '.htmlspecialchars($lr['ingredients']).'</div>';
-            if (!empty($lr['instructions'])) $liked_html .= '<div class="recipe-card-instructions"><b>Instructions:</b> '.htmlspecialchars(substr($lr['instructions'],0,300)).(strlen($lr['instructions'])>300?'...':'').'</div>';
+            if (!empty($lr['instructions'])) $liked_html .= '<div class="recipe-card-instructions"><b>Instructions:</b> '.htmlspecialchars(mb_substr($lr['instructions'],0,250)).(mb_strlen($lr['instructions'])>250?'...':'').'</div>';
             $liked_html .= '</div></div>';
         }
         $liked_html .= '</div>';
@@ -106,12 +105,13 @@ if ($lstmt) {
     $lstmt->close();
 }
 
-// Load profile.html and replace placeholders (including LIKED_RECIPES)
+// --- Load profile.html and replace placeholders ---
 $html = file_get_contents('profile.html');
 $html = str_replace(
     ['{{PROFILE_IMG}}', '{{USERNAME}}', '{{EMAIL}}', '{{REGION}}', '{{LIKED_RECIPES}}'],
-    [$avatar, htmlspecialchars($username), htmlspecialchars($email), htmlspecialchars($region), $liked_html],
+    [htmlspecialchars($avatar ?? 'default-avatar.jpg'), htmlspecialchars($username ?? ''), htmlspecialchars($email ?? ''), htmlspecialchars($region ?? ''), $liked_html],
     $html
 );
 echo $html;
+exit;
 ?>

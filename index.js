@@ -19,85 +19,152 @@ if (typeof document !== 'undefined' && document && typeof document.addEventListe
 	    msg.style.display = "none";
 	  }
 
-	  // Search button (guarded)
-	  if (searchBtn && input && details && items) {
-	    searchBtn.addEventListener('click', () => {
-	      hideMsg();
-	      const inputValue = input.value.trim();
-	      details.innerHTML = "";
-	      items.innerHTML = "";
+	  // add: recipeCardHtml and attachResultHandlers helpers (used by performSearch/performCategorySearch)
+function recipeCardHtml(meal) {
+  const id = meal.idMeal || '';
+  const thumb = meal.strMealThumb || '';
+  const title = meal.strMeal || '';
+  // simple tile markup — consistent with index.css grid
+  return `
+    <article class="search-result-card card" tabindex="0" data-mealid="${id}" aria-label="${title}">
+      <img src="${thumb}" class="card-img-top" alt="${title}">
+      <div class="card-body">
+        <h5 class="card-title">${title}</h5>
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary view-recipe-btn" data-mealid="${id}">View Recipe</button>
+          <button class="btn btn-outline-danger like-btn" data-mealid="${id}" type="button">
+            <i class="bi bi-heart"></i> Like
+          </button>
+        </div>
+      </div>
+    </article>
+  `;
+}
 
-	      if (!inputValue) {
-	        showMsg("Please enter a meal or ingredient.");
+function attachResultHandlers(container) {
+  if (!container) return;
+
+  // view button
+  container.querySelectorAll('.view-recipe-btn').forEach(btn => {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      const id = this.getAttribute('data-mealid');
+      if (id) showMealDetails(id);
+    });
+  });
+
+  // clicking card (but not buttons) opens details
+  container.querySelectorAll('.search-result-card').forEach(card => {
+    card.addEventListener('click', function (e) {
+      if (e.target.closest('.like-btn') || e.target.closest('.view-recipe-btn')) return;
+      const id = this.getAttribute('data-mealid');
+      if (id) showMealDetails(id);
+    });
+  });
+
+  // like button: fetch meal details then POST to save_like.php (toggle)
+  container.querySelectorAll('.like-btn').forEach(btn => {
+    btn.addEventListener('click', async function (e) {
+      e.preventDefault();
+      const mealId = this.getAttribute('data-mealid');
+      if (!mealId) return;
+      try {
+        const resp = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${encodeURIComponent(mealId)}`);
+        const data = await resp.json();
+        const meal = data.meals && data.meals[0];
+        if (!meal) { alert('Could not load meal details.'); return; }
+        const ingredients = [];
+        for (let i = 1; i <= 20; i++) {
+          const ing = meal[`strIngredient${i}`];
+          const measure = meal[`strMeasure${i}`];
+          if (ing && ing.trim() !== '') ingredients.push((measure ? measure + ' ' : '') + ing);
+        }
+        const payload = {
+          meal_id: meal.idMeal,
+          title: meal.strMeal,
+          thumbnail: meal.strMealThumb || '',
+          ingredients: ingredients.join(', '),
+          instructions: meal.strInstructions || ''
+        };
+        const r = await fetch('save_like.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          credentials: 'same-origin'
+        });
+        if (r.status === 401) { window.location.href = 'signin.html'; return; }
+        const jr = await r.json();
+        if (jr.status === 'added') {
+          btn.classList.add('active');
+          btn.innerHTML = '<i class="bi bi-heart-fill"></i> Liked';
+          showToast('Recipe added to your liked recipes', 'success');
+        } else if (jr.status === 'removed') {
+          btn.classList.remove('active');
+          btn.innerHTML = '<i class="bi bi-heart"></i> Like';
+          showToast('Recipe removed from your liked recipes', 'info');
+        } else if (jr.error) {
+          showToast('Could not save like: ' + (jr.error || 'Server error'), 'error');
+        }
+
+        // NEW: If we're on the profile page (or #likedRecipes exists), refresh the liked list
+        const likedContainer = document.getElementById('likedRecipes');
+        if (likedContainer) {
+          fetch('get_likes.php', { credentials: 'same-origin' })
+            .then(res => res.text())
+            .then(html => {
+              likedContainer.innerHTML = html;
+            })
+            .catch(err => {
+              console.warn('Could not refresh liked recipes', err);
+            });
+        }
+      } catch (err) {
+        console.error('Like error', err);
+        alert('Could not like the recipe. Try again.');
+      }
+    });
+  });
+}
+
+	  // centralised search implementation used by Search button and suggestion clicks
+	  async function performSearch(q) {
+	    if (!q || !items) return;
+	    hideMsg();
+	    details.innerHTML = '';
+	    items.innerHTML = '<div class="p-3 text-muted">Loading results...</div>';
+	    try {
+	      const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(q)}`);
+	      const data = await res.json();
+	      if (data && data.meals) {
+	        items.innerHTML = data.meals.map(m => recipeCardHtml(m)).join('');
+	        attachResultHandlers(items);
+	        updateNavUser();
+	        // results now push content down; scroll smoothly to results
+	        items.scrollIntoView({ behavior: 'smooth' });
 	        return;
 	      }
+	      // fallback to ingredient filter
+	      const res2 = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(q)}`);
+	      const data2 = await res2.json();
+	      if (data2 && data2.meals) {
+	        items.innerHTML = data2.meals.map(m => recipeCardHtml(m)).join('');
+	        attachResultHandlers(items);
+	        updateNavUser();
+	        items.scrollIntoView({ behavior: 'smooth' });
+	        return;
+	      }
+	      items.innerHTML = '';
+	      showMsg('No recipes found. Try a different meal or ingredient.');
+	    } catch (err) {
+	      console.error(err);
+	      items.innerHTML = '';
+	      showMsg('An error occurred while fetching recipes.');
+	    }
+	  }
 
-	      // search by meal name
-	      fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(inputValue)}`)
-	        .then(r => r.json())
-	        .then(data => {
-	          if (data.meals) {
-	            let grid = `<div class="row justify-content-center">`;
-	            data.meals.forEach(meal => {
-	              grid += `
-	<div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-	  <div class="card singleItem search-result-card h-100" data-mealid="${meal.idMeal}" style="cursor:pointer;">
-	    <img src="${meal.strMealThumb}" class="card-img-top" alt="${meal.strMeal}">
-	    <div class="card-body text-center">
-	      <h5 class="card-title">${meal.strMeal}</h5>
-	      <button class="btn btn-primary view-recipe-btn" data-mealid="${meal.idMeal}">View Recipe</button>
-	    </div>
-	  </div>
-	</div>`;
-	            });
-	            grid += `</div>`;
-	            items.innerHTML = grid;
-	            items.querySelectorAll('.singleItem, .view-recipe-btn').forEach(el => {
-	              el.addEventListener('click', function (e) {
-	                e.preventDefault();
-	                e.stopPropagation();
-	                let mealId = this.getAttribute('data-mealid') || (this.closest && this.closest('.singleItem') && this.closest('.singleItem').getAttribute('data-mealid'));
-	                if (mealId) showMealDetails(mealId);
-	              });
-	            });
-	          } else {
-	            // fallback: search by ingredient
-	            fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(inputValue)}`)
-	              .then(r2 => r2.json())
-	              .then(data2 => {
-	                if (data2.meals) {
-	                  let grid = `<div class="row justify-content-center">`;
-	                  data2.meals.forEach(meal => {
-	                    grid += `
-	<div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-	  <div class="card singleItem search-result-card h-100" data-mealid="${meal.idMeal}" style="cursor:pointer;">
-	    <img src="${meal.strMealThumb}" class="card-img-top" alt="${meal.strMeal}">
-	    <div class="card-body text-center">
-	      <h5 class="card-title">${meal.strMeal}</h5>
-	      <button class="btn btn-primary view-recipe-btn" data-mealid="${meal.idMeal}">View Recipe</button>
-	    </div>
-	  </div>
-	</div>`;
-	                  });
-	                  grid += `</div>`;
-	                  items.innerHTML = grid;
-	                  items.querySelectorAll('.singleItem, .view-recipe-btn').forEach(el => {
-	                    el.addEventListener('click', function (e) {
-	                      e.preventDefault();
-	                      e.stopPropagation();
-	                      let mealId = this.getAttribute('data-mealid') || (this.closest && this.closest('.singleItem') && this.closest('.singleItem').getAttribute('data-mealid'));
-	                      if (mealId) showMealDetails(mealId);
-	                    });
-	                  });
-	                } else {
-	                  showMsg("No recipes found. Try a different meal or ingredient.");
-	                }
-	              })
-	              .catch(err => { console.error(err); showMsg("An error occurred while fetching recipes."); });
-	          }
-	        })
-	        .catch(err => { console.error(err); showMsg("An error occurred while fetching recipes."); });
-	    });
+	  // Search button (guarded)
+	  if (searchBtn && input && items) {
+	    searchBtn.addEventListener('click', () => performSearch(input.value.trim()));
 	  }
 
 	  // Show meal details (guarded)
@@ -185,6 +252,7 @@ if (typeof document !== 'undefined' && document && typeof document.addEventListe
 	          input.value = name;
 	          suggestions.classList.remove('show');
 	          suggestions.style.display = 'none';
+	          performSearch(name); // run search immediately on suggestion click
 	        };
 	        suggestions.appendChild(li);
 	      });
@@ -319,6 +387,28 @@ if (typeof document !== 'undefined' && document && typeof document.addEventListe
 	      items.innerHTML = '<div class="p-3 text-danger">Error fetching category recipes.</div>';
 	    }
 	  }
+
+	  // add: small toast/pop-up helper
+  function showToast(message, type = 'success') {
+    // types: 'success' (green), 'info' (blue), 'error' (red)
+    const colors = {
+      success: '#1f8a3a',
+      info: '#0b74c7',
+      error: '#c02f2f'
+    };
+    const toast = document.createElement('div');
+    toast.className = 'app-toast';
+    toast.style.borderLeft = `6px solid ${colors[type] || colors.info}`;
+    toast.innerText = message;
+    document.body.appendChild(toast);
+    // force reflow then show
+    requestAnimationFrame(() => toast.classList.add('visible'));
+    // remove after 3s
+    setTimeout(() => {
+      toast.classList.remove('visible');
+      setTimeout(() => { try { toast.remove(); } catch (e) {} }, 300);
+    }, 3000);
+  }
 
 	  updateNavUser(); // Initial call to set up nav user info
 	  loadCategories(); // ensure categories are loaded on page ready
