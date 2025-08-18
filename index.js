@@ -234,6 +234,36 @@ if (typeof document !== 'undefined' && document && typeof document.addEventListe
 	      }
 	    });
 	  }
+
+	  // Update nav greeting if logged in (prefer #navSignIn)
+	  function updateNavUser() {
+	    fetch('session.php', { credentials: 'same-origin' })
+	      .then(res => res.json())
+	      .then(js => {
+	        if (js && js.username) {
+	          // Prefer explicit id
+	          const navById = document.getElementById('navSignIn');
+	          if (navById) {
+	            navById.textContent = `Hello, ${js.username}`;
+	            navById.href = 'profile.php';
+	            navById.classList.add('active');
+	            navById.setAttribute('aria-current', 'page');
+	            return;
+	          }
+	          // Fallback to existing selectors if id is not present
+	          const signLink = document.querySelector('a[href="signin.html"], a[href="signin.php"], a[href="login.html"], a[href="login.php"]');
+	          if (signLink) {
+	            signLink.textContent = `Hello, ${js.username}`;
+	            signLink.href = 'profile.php';
+	            signLink.classList.add('active');
+	            signLink.setAttribute('aria-current', 'page');
+	          }
+	        }
+	      })
+	      .catch(() => { /* ignore errors */ });
+	  }
+
+	  updateNavUser(); // Initial call to set up nav user info
 	});
 } else {
 	// Not running in a browser DOM (or script loaded incorrectly). No-op to avoid runtime errors.
