@@ -28,9 +28,9 @@ body {
     gap: 8px;
 }
 
-.logo-link img {
-    height: 32px !important;
-    width: auto !important;
+.sidebar .logo-link img {
+    height: 100px;
+    width: auto;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(56, 169, 219, 0.10);
     margin-bottom: 4px;
