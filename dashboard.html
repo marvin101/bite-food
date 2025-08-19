@@ -25,6 +25,10 @@
     <!-- Sidebar -->
     <nav id="sidebar" class="sidebar">
       <div class="sidebar-header">
+        <?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
+        <?php if (!empty($_SESSION['username'])): ?>
+          <div class="sidebar-greeting" style="padding:12px 20px;color:#fff;font-weight:600;">Hi! <?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES|ENT_SUBSTITUTE, 'UTF-8'); ?></div>
+        <?php endif; ?>
         <h3>Dashboard</h3>
         <!-- removed in-sidebar hamburger to avoid it being off-screen on mobile -->
       </div>
