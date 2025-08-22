@@ -228,6 +228,24 @@ body {
     color: #444;
 }
 
+/* Inline edit form inside recipe cards */
+.recipe-card .edit-form {
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.04);
+  padding: 10px;
+}
+.recipe-card .edit-form .form-control-sm {
+  font-size: 0.95rem;
+  padding: 6px 8px;
+}
+
+/* small spacing for action buttons */
+.recipe-card .edit-form .btn {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+}
+
 /* Modal z-index fix for sidebar overlay */
 .modal {
     z-index: 2000;
