@@ -312,8 +312,8 @@ function attachResultHandlers(container) {
 	          // Prefer explicit id
 	          const navById = document.getElementById('navSignIn');
 	          if (navById) {
-	            navById.textContent = `Hello, ${js.username}`;
-	            navById.href = 'profile.php';
+	            navById.textContent = `Dashboard`;
+	            navById.href = 'dashboard.php';
 	            navById.classList.add('active');
 	            navById.setAttribute('aria-current', 'page');
 	            return;
