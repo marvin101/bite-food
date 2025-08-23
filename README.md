@@ -108,34 +108,34 @@ ovqa1dgt@anonaddy.me, marvin101
 ```mermaid
 erDiagram
     USERS {
-        int id PK
-        varchar username
-        varchar email
-        varchar region
-        varchar password
-        varchar profile_pic
+        INT id PK
+        VARCHAR username
+        VARCHAR email
+        VARCHAR region
+        VARCHAR password
+        VARCHAR profile_pic
     }
 
     RECIPES {
-        int id PK
-        int user_id FK
-        varchar title
-        text ingredients
-        text instructions
-        varchar image_url
-        timestamp created_at
+        INT id PK
+        INT user_id FK
+        VARCHAR title
+        TEXT ingredients
+        TEXT instructions
+        VARCHAR image_url
+        TIMESTAMP created_at
     }
 
     USER_LIKES {
-        int id PK
-        int user_id FK
-        varchar meal_id UNIQUE
-        varchar title
-        varchar thumbnail
-        text ingredients
-        text instructions
-        timestamp created_at
+        INT id PK
+        INT user_id FK
+        VARCHAR meal_id UNIQUE
+        VARCHAR title
+        VARCHAR thumbnail
+        TEXT ingredients
+        TEXT instructions
+        TIMESTAMP created_at
     }
 
-    USERS ||--o{ RECIPES : "creates"
-    USERS ||--o{ USER_LIKES : "likes"
+    USERS ||--o{ RECIPES : creates
+    USERS ||--o{ USER_LIKES : likes
