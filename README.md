@@ -107,7 +107,8 @@ ovqa1dgt@anonaddy.me, marvin101
 
 ```mermaid
 erDiagram
-    USERS {
+classDiagram
+    class USERS {
         INT id PK
         VARCHAR username
         VARCHAR email
@@ -116,7 +117,7 @@ erDiagram
         VARCHAR profile_pic
     }
 
-    RECIPES {
+    class RECIPES {
         INT id PK
         INT user_id FK
         VARCHAR title
@@ -126,7 +127,7 @@ erDiagram
         TIMESTAMP created_at
     }
 
-    USER_LIKES {
+   class USER_LIKES {
         INT id PK
         INT user_id FK
         VARCHAR meal_id UNIQUE
