@@ -15,7 +15,7 @@ A web-based application (likely a food-related dashboard) built with PHP, JavaSc
 - [Contributing](#contributing)  
 - [License](#license)  
 - [Contact](#contact)
-- [SQL Schema](#sql-schema)
+- [ER Diagram](#sql-schema)
 ---
 
 ## Project Overview  
@@ -105,7 +105,7 @@ To make changes that you like create a fork.
 
 ovqa1dgt@anonaddy.me, marvin101
 
-## SQL Schema
+## ER Diagram
 
 ```mermaid
 classDiagram
