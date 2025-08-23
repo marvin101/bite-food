@@ -105,3 +105,37 @@ To make changes that you like create a fork.
 
 ovqa1dgt@anonaddy.me, marvin101
 
+```mermaid
+erDiagram
+    USERS {
+        int id PK
+        varchar username
+        varchar email
+        varchar region
+        varchar password
+        varchar profile_pic
+    }
+
+    RECIPES {
+        int id PK
+        int user_id FK
+        varchar title
+        text ingredients
+        text instructions
+        varchar image_url
+        timestamp created_at
+    }
+
+    USER_LIKES {
+        int id PK
+        int user_id FK
+        varchar meal_id UNIQUE
+        varchar title
+        varchar thumbnail
+        text ingredients
+        text instructions
+        timestamp created_at
+    }
+
+    USERS ||--o{ RECIPES : "creates"
+    USERS ||--o{ USER_LIKES : "likes"
