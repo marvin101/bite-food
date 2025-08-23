@@ -74,9 +74,25 @@
 .card-text {
   color: #38a1db;
 }
-.card-p {
-  color: #bbdce5;
+
+.card-body h5 {
+  color: #1b4d3e;
+  font-weight: bold;
 }
+
+.card-body li {
+  color: #ffd93d;
+}
+
+.card-body p {
+  color: #ff9a00;
+}
+
+.card-body h6 {
+  color: #1b4d3e;
+  font-weight: bold;
+}
+
 
 /* Details section */
 #details {
@@ -204,6 +220,16 @@ body.dark-mode .btn-secondary:hover {
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 12px;
   align-items: start;
+}
+
+.search-results-container p {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #e74c3c;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  padding: 10px 0;
 }
 
 /* Responsive tweaks */
