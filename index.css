@@ -56,6 +56,7 @@
   border: none;
   background: rgba(255, 255, 255, 0.85);
   transition: transform 0.2s, box-shadow 0.2s;
+  color: #c59560;
 }
 
 .singleItem:hover,
@@ -72,6 +73,9 @@
 
 .card-text {
   color: #38a1db;
+}
+.card-p {
+  color: #bbdce5;
 }
 
 /* Details section */
