@@ -106,10 +106,9 @@ To make changes that you like create a fork.
 ovqa1dgt@anonaddy.me, marvin101
 
 ```mermaid
-erDiagram
 classDiagram
     class USERS {
-        INT id PK
+        INT id
         VARCHAR username
         VARCHAR email
         VARCHAR region
@@ -118,8 +117,8 @@ classDiagram
     }
 
     class RECIPES {
-        INT id PK
-        INT user_id FK
+        INT id
+        INT user_id
         VARCHAR title
         TEXT ingredients
         TEXT instructions
@@ -127,10 +126,10 @@ classDiagram
         TIMESTAMP created_at
     }
 
-   class USER_LIKES {
-        INT id PK
-        INT user_id FK
-        VARCHAR meal_id UNIQUE
+    class USER_LIKES {
+        INT id
+        INT user_id
+        VARCHAR meal_id
         VARCHAR title
         VARCHAR thumbnail
         TEXT ingredients
@@ -138,5 +137,5 @@ classDiagram
         TIMESTAMP created_at
     }
 
-    USERS ||--o{ RECIPES : creates
-    USERS ||--o{ USER_LIKES : likes
+    USERS "1" --> "many" RECIPES : creates
+    USERS "1" --> "many" USER_LIKES : likes
