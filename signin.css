@@ -1,0 +1,23 @@
+.btn {
+  background: linear-gradient(90deg, #43e97b 0%, #38a1db 100%);
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 2px 8px 0 rgba(56, 169, 219, 0.10);
+  transition: background 0.2s;
+}
+
+.btn:hover {
+  background: linear-gradient(90deg, #38a1db 0%, #43e97b 100%);
+  color: #fff;
+}
+.register-link {
+  text-align: center;
+  margin-top: 12px;
+  color: #fff;
+}
+.register-link a {
+  color: #38a1db;
+  text-decoration: none;
+  font-weight: 600;
+}
